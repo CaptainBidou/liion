@@ -1,0 +1,7 @@
+.customLeft {
+  float: left;
+  width:20%;
+  height:80%;
+  /* round shape */
+    border-radius: 2%;
+}

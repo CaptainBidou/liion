@@ -1,0 +1,48 @@
+<mat-card class="carte">
+    <mat-card-header>
+        <mat-card-title>
+        <h1>Test {{cellsName}}</h1>
+        </mat-card-title>
+        <mat-card-subtitle>{{date | date:"dd MMM, yyyy 'at' hh:mm a"}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+        Progess of the test :
+        </p>
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        <div class="example-spacer"></div>
+            
+        <div>
+            <span>
+            
+            <section class="example-section">
+                Mode choosen :
+                <mat-checkbox class="example-margin" [disabled]="true" *ngFor="let act of actions" [value]="'true'" [checked]="act.id==actionSelected.id?true:false">{{act.name}}</mat-checkbox>
+              </section>
+            </span>
+        </div>
+
+        <div>
+            <span>
+                Voltage : {{voltage}} V
+                Current : {{current}} A
+                Capacity : {{capacity}} Q
+            </span>
+        </div>
+
+
+        <div>
+            <canvasjs-chart [options]="chartOptionsVoltage" [styles]="{width: '48%', height:'200px', float:'left'}" (chartInstance)="getChartInstanceVoltage($event)"></canvasjs-chart>  
+            <canvasjs-chart [options]="chartOptionsCapacity" [styles]="{width: '52%', height:'200px'}" (chartInstance)="getChartInstanceCapacity($event)"></canvasjs-chart>  
+        </div>
+        <div>
+            <canvasjs-chart [options]="chartOptionsSoc" [styles]="{width: '100%', height:'200px'}" (chartInstance)="getChartInstanceSOC($event)"></canvasjs-chart>    
+        </div>
+        
+
+    </mat-card-content >
+    <mat-card-actions>
+        <button mat-button color="warn">Stop the test<mat-icon>stop</mat-icon></button>
+        <button mat-button>Start the test<mat-icon>play_arrow</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
