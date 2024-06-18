@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SocketAddress } from 'net';
 import { Observable } from 'rxjs';
@@ -6,18 +7,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RequestService {
+  http: any;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) {
+    this.http = httpClient;
 
+   }
 
+  // the server is 127.0.0.1:5000
+  // send {id: 1, data: {}} to the server
 
-  doRequest(data: any){
-    // for res in SocketAddress.getaddrinfo("127.0.0.1", 5000):
-    //   with Socket.socket(res[0], socket.SOCKET_STREAM) as s:
-    //     s.connect(res[4])
-    //     s.sendall(data)
-    //     data = s.recv(1024)
-    //     print('Received', repr(data))
-    // return data
+  doRequest(data: any): Observable<any> {
+    return this.http.post('http://127.0.0.1:5000', data);
   }
+
 }

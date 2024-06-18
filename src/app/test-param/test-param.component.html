@@ -9,7 +9,7 @@
         <mat-form-field>
           
             <mat-label>Action type</mat-label>
-        <mat-select [value]="action">
+        <mat-select [(value)]="actionModel" >
             <mat-option *ngFor="let act of actions" [value]="act.id">{{act.name}}</mat-option>
         </mat-select>
     </mat-form-field>
@@ -19,8 +19,8 @@
         <mat-form-field>
           
             <mat-label>Cells selected</mat-label>
-        <mat-select [value]="cellSelected">
-            <mat-option *ngFor="let cel of cells" [value]="cel.value">{{cel.name}}</mat-option>
+        <mat-select [(value)]="this.cellModel">
+            <mat-option *ngFor="let cel of cells" [value]="cel.id">{{cel.name}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -30,8 +30,8 @@
         <mat-form-field>
           
             <mat-label>Estimator selected</mat-label>
-        <mat-select [value]="cellSelected">
-            <mat-option *ngFor="let cel of cells" [value]="cel.value">{{cel.name}}</mat-option>
+        <mat-select [(value)]="this.observerModel">
+            <mat-option *ngFor="let cel of observers" [value]="cel.id">{{cel.name}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -40,11 +40,12 @@
         <p>Commentary : </p>
         <mat-form-field>
             <mat-label>Commentary</mat-label>
-            <textarea matInput [value]="comment"></textarea>
+            <textarea matInput [value]="commentModel"
+            (input)="getValueComment($event)"></textarea>
         </mat-form-field>
         
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>Create the test</button>
+        <button mat-button (click)="submitFormulary()">Create the test</button>
     </mat-card-actions>
 </mat-card>

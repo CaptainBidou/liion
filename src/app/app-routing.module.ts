@@ -5,7 +5,7 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { TestParamComponent } from './test-param/test-param.component';
 
 const routes: Routes = [
-  {path:'test',component:TestComponentComponent},
+  {path:'test/:id',component:TestComponentComponent},
   {path:'',component:TestParamComponent},
   { path: '**', redirectTo: '' }];
 

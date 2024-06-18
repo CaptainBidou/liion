@@ -31,6 +31,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatPseudoCheckboxModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     MatRadioModule,
     MatPseudoCheckboxModule,
     MatCheckboxModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    HttpClientModule
 
 
   ],
