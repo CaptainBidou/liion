@@ -17,7 +17,7 @@ export class RequestService {
   // the server is 127.0.0.1:5000
   // send {id: 1, data: {}} to the server
 
-  doRequest(data: any): Observable<any> {
+  public doRequest(data: any): Observable<any> {
     return this.http.post('http://127.0.0.1:5000', data);
   }
 

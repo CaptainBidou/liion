@@ -17,11 +17,13 @@ export class TestComponentComponent {
 private route = inject(ActivatedRoute);
 id:number;
 test$: Observable<any>;
-requestService: RequestService;
+public requestService: RequestService;
+soc:number;
+crate:number=0;
 
 actions: Action[] = [];
 action$: Observable<any>;
-actionSelected = {id:1,name:"CC-CV"}
+actionSelected:Action = new Action(0,"feur")
 
 cells : Cell[];
 cellsName = "";
@@ -29,7 +31,6 @@ cellsName = "";
 date = new Date();
 voltage = 0;
 current = 0;
-capacity = 0;
 comment="";
 
 lastMeasure: number = 0;
@@ -38,13 +39,18 @@ startStop$ : Observable<any>;
 measure$: Observable<any[]>;
 allMeasure$: Observable<any[]>;
 
-pointVoltage = [];
-pointCurrent = [];
-pointSoc = [];
+pointVoltage:any[] = [];
+pointVoltageEstimator:any[] = [];
+pointCurrent:any[] = [];
+pointSoc:any[] = [];
+pointSocEstimator:any[] = [];
 
 chartV: any;
 chartS: any;
 chartC: any;
+
+actionStart:Boolean = false;
+
 
 
 constructor(requestService: RequestService, private router: Router) { 
@@ -56,13 +62,10 @@ constructor(requestService: RequestService, private router: Router) {
 	this.startStop$ = new Observable<any>();
 	this.measure$ = requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": this.lastMeasure}});
 	this.allMeasure$ = requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": 0}});
-
-
+	this.soc = 1
 }
 
 ngOnInit() {
-  
-
   this.test$.subscribe((data) => {
 	console.log(data);
 	data.cells.forEach((element: any) => {
@@ -72,11 +75,12 @@ ngOnInit() {
 	this.cellsName = this.cellsName.slice(0, -2);
 	this.date = new Date(data.time);
 	this.comment = data.comment;
+	this.actionSelected = new Action(data.action.id_action,data.action.name)
+	this.crate = data.cRate;
 });
 
 
 console.log(this.cellsName);
-
 	this.action$.subscribe((data) => {
 		console.log(data);
 		data.forEach((element: any) => {
@@ -84,6 +88,7 @@ console.log(this.cellsName);
 		});
 	  });
 
+	  this.getAllPoints();
 }
 
 
@@ -94,10 +99,20 @@ console.log(this.cellsName);
 	  title: {
 		text: "SOC"
 	  },
+	  axisY:{
+		minimum: 0,
+		maximum: 1.1,
+	  },
+
 	  data: [{
 		type: "line",
 		dataPoints: this.pointSoc
-	  }]
+	  },
+	  {
+		type: "line",
+		dataPoints: this.pointSocEstimator
+		}
+	]
 	}
 
 	chartOptionsVoltage = {
@@ -105,13 +120,17 @@ console.log(this.cellsName);
 		title: {
 		  text: "Voltage"
 		},
+		axisY:{
+			minimum: 0,
+			maximum: 5.5,
+		  },
 		data: [{
 		  type: "line",
 		  dataPoints: this.pointVoltage
 		},
 	  {
 		type: "line",
-		dataPoints: this.pointVoltage
+		dataPoints: this.pointVoltageEstimator
 		}]
 	  }
 	  chartOptionsCurrent = {
@@ -119,23 +138,78 @@ console.log(this.cellsName);
 		title: {
 		  text: "Current"
 		},
+		axisY:{
+			minimum: 0,
+			maximum: 5.5,
+		  },
 		data: [{
 		  type: "line",
 		  dataPoints: this.pointCurrent
 		},]
 	  }
 
-	updateAllCharts(){
+	public updateAllCharts(){
 		this.measure$ = this.requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": this.lastMeasure}});
 		this.measure$.subscribe((data) => {
 			console.log(data);
+			if (data != null){
+			data.forEach(element => {
+				let decode = JSON.parse(element)
+				this.lastMeasure=decode.id;
+				this.current=parseFloat(decode.current);
+				this.voltage=parseFloat(decode.output_voltage);
+				if(this.pointCurrent.length >= 2){
+					let lastCurrent = this.pointCurrent[this.pointCurrent.length-2]
+					this.soc = this.soc-lastCurrent.y*(1/(3600*3.08))
+
+
+				}
+					
+				let dateMesure = new Date(decode.time)
+				let timeCount = (dateMesure.getTime() - this.date.getTime())/1000;
+				this.pointVoltage.push({x:timeCount,y:this.voltage})
+				this.pointCurrent.push({x:timeCount,y:this.current})
+				this.pointSoc.push({x:timeCount,y:this.soc})
+				this.pointVoltageEstimator.push({x:timeCount,y:decode.estimator_voltage})
+				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
+			});
+			this.chartC.render()
+			this.chartS.render()
+			this.chartV.render()
+		}
+			if(this.actionStart)
+				setTimeout(() => {this.updateAllCharts()}, 2000);
 		});
-		setTimeout(this.updateAllCharts, 1000);
 	}
+
+	//start of the programm
 	getAllPoints(){
-		this.allMeasure$ = this.requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": 0}});
-		this.allMeasure$.subscribe((data) => {
+		this.measure$ = this.requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": this.lastMeasure}});
+		this.measure$.subscribe((data) => {
 			console.log(data);
+			data.forEach(element => {
+				let decode = JSON.parse(element)
+				this.lastMeasure=decode.id;
+				this.current=parseFloat(decode.current);
+				this.voltage=parseFloat(decode.output_voltage);
+				if(this.pointCurrent.length >= 2){
+					let lastCurrent = this.pointCurrent[this.pointCurrent.length-2]
+					this.soc = this.soc-lastCurrent.y*(1/(3600*3.08))
+
+
+				}
+					
+				let dateMesure = new Date(decode.time)
+				let timeCount = (dateMesure.getTime() - this.date.getTime())/1000;
+				this.pointVoltage.push({x:timeCount,y:this.voltage})
+				this.pointVoltageEstimator.push({x:timeCount,y:decode.estimator_voltage})
+				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
+				this.pointCurrent.push({x:timeCount,y:this.current})
+				this.pointSoc.push({x:timeCount,y:this.soc})
+			});
+			this.chartC.render()
+			this.chartS.render()
+			this.chartV.render()
 		});
 	}
 
@@ -145,12 +219,15 @@ console.log(this.cellsName);
 
 	getChartInstanceSOC(chart: object) {
 		this.chartS = chart;
+		this.chartS.render()
 	}
 	getChartInstanceCurrent(chart: object) {
 		this.chartC = chart;
+		this.chartC.render()
 	}
 	getChartInstanceVoltage(chart: object) {
 		this.chartV = chart;
+		this.chartV.render()
 	}
 
 
@@ -159,17 +236,20 @@ console.log(this.cellsName);
 		this.startStop$ = this.requestService.doRequest({"id": 11, "data": {"id_test": this.id}});
 		this.startStop$.subscribe((data) => {
 			console.log(data);
-			this.getAllPoints();
 			this.updateAllCharts();
+			this.actionStart = true ;
 		});
+
 	}
 	
 	stopTest(){
 		this.startStop$ = this.requestService.doRequest({"id": 12, "data": {"id_test": this.id}});
 		this.startStop$.subscribe((data) => {
 			console.log(data);
+			this.actionStart = false ;
 		});
-		
 	}
+
+
 
 }

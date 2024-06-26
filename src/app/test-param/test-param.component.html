@@ -14,15 +14,27 @@
         </mat-select>
     </mat-form-field>
 
+    <div *ngIf="actionModel==4 || actionModel==1 || actionModel==2">
+        <mat-divider></mat-divider>
+        <p>C-rate (%) :</p>
+    <mat-slider  min="0" max="100" step="1"  showTickMarks discrete [displayWith]="formatLabel">
+        <input matSliderThumb [(value)]="cratePercent">
+      </mat-slider>
+    </div>
+    
+
+
     <mat-divider></mat-divider>
     <p>Cell : </p>
-        <mat-form-field>
-          
+    <mat-form-field>      
             <mat-label>Cells selected</mat-label>
-        <mat-select [(value)]="this.cellModel">
-            <mat-option *ngFor="let cel of cells" [value]="cel.id">{{cel.name}}</mat-option>
+        <mat-select (selectionChange)="addCellected()" [(value)]="this.cellModel">
+            <mat-option  *ngFor="let cel of cells" [value]="cel.id">{{cel.name}}</mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-chip-set aria-label="Fish selection">
+        <mat-chip *ngFor="let cel of cellSelected" (click)="removeCellected(cel.id)">{{cel.name}}</mat-chip>
+    </mat-chip-set>
 
         <mat-divider></mat-divider>
 
@@ -30,10 +42,13 @@
         <mat-form-field>
           
             <mat-label>Estimator selected</mat-label>
-        <mat-select [(value)]="this.observerModel">
+        <mat-select (selectionChange)="addObserver()" [(value)]="this.observerModel">
             <mat-option *ngFor="let cel of observers" [value]="cel.id">{{cel.name}}</mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-chip-set aria-label="Fish selection">
+        <mat-chip *ngFor="let cel of observerSelected" (click)="removeObserver(cel.id)">{{cel.name}}</mat-chip>
+    </mat-chip-set>
 
         <mat-divider></mat-divider>
 

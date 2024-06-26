@@ -1,17 +1,18 @@
 <mat-card class="carte">
     <mat-card-header>
         <mat-card-title>
-        <h1>Test {{cellsName}}</h1>
+        <h1>Test {{cellsName}} <span *ngIf="actionSelected.id==4 || actionSelected.id==1 || actionSelected.id==2">With C-Rate {{crate}}%</span></h1>
         </mat-card-title>
         <mat-card-subtitle>{{date | date:"dd MMM, yyyy 'at' hh:mm a"}}</mat-card-subtitle>
         <mat-card-subtitle>Commentary : {{comment}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>
+
+        <!--<p>
         Progess of the test :
         </p>
         <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-        <div class="example-spacer"></div>
+        <div class="example-spacer"></div>-->
             
         <div>
             <span>
@@ -27,7 +28,6 @@
             <span>
                 Voltage : {{voltage}} V
                 Current : {{current}} A
-                Capacity : {{capacity}} Q
             </span>
         </div>
 
@@ -43,7 +43,7 @@
 
     </mat-card-content >
     <mat-card-actions>
-        <button mat-button color="warn" (click)="startTest()">Stop the test<mat-icon>stop</mat-icon></button>
-        <button mat-button (click)="stopTest()">Start the test<mat-icon>play_arrow</mat-icon></button>
+        <button *ngIf="this.actionStart" mat-button color="warn" (click)="stopTest()">Stop the test<mat-icon>stop</mat-icon></button>
+        <button *ngIf="!this.actionStart" mat-button (click)="startTest()">Start the test<mat-icon>play_arrow</mat-icon></button>
     </mat-card-actions>
 </mat-card>

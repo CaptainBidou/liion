@@ -8,12 +8,15 @@ import { Action } from '../Model/Action.model';
 import { Cell } from '../Model/Cell.model';
 import { Estimator } from '../Model/Estimator.model';
 import { Test } from '../Model/Test.model';
+import { exit } from 'process';
 
 @Component({
   selector: 'app-test-param',
   templateUrl: './test-param.component.html',
   styleUrl: './test-param.component.css'
 })
+
+
 export class TestParamComponent {
   actions: Action[] = [];
   action$: Observable<any>;
@@ -21,22 +24,26 @@ export class TestParamComponent {
 
 
   cells : Cell[] = [];
-  cell$: Observable<any>;;
+  cell$: Observable<any>;
   cellModel:number;
+  cellSelected:Cell[]=[];
 
   commentModel ="";
   
   observers : Estimator[] = [];
   observer$: Observable<any>;
   observerModel:number;
+  observerSelected:Estimator[]=[];
 
   sendRequest$: Observable<any>;
   data:Test;
   
   RequestService: RequestService;
 
+  cratePercent:number = 0;
+
   constructor(RequestService: RequestService) { 
-    this.data = new Test(-1, [-1], [-1], "");
+    this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
 
     this.action$ = RequestService.doRequest({"id": 1, "data": {"nothing": "nothing"}});
@@ -73,6 +80,8 @@ export class TestParamComponent {
 
   }
 
+  
+
   // selected(event:any){
   //   console.log(event);
   //   this.cellSelected.push(event);
@@ -97,7 +106,17 @@ export class TestParamComponent {
   public pushTest(){
     console.log("push");
     // data = {'id_action':,'comment':,cells:[],'observers':[]}
-    this.data = new Test(this.actionModel, [this.cellModel], [this.observerModel], this.commentModel);
+    let tabid:number[] = []
+    this.cellSelected.forEach((element: any) => {
+      tabid.push(element.id)
+    });
+
+    let tabobs:number[] = []
+    this.observerSelected.forEach((element: any) => {
+      tabobs.push(element.id)
+    });
+
+    this.data = new Test(this.actionModel, tabid, tabobs, this.commentModel,this.cratePercent);
     this.sendRequest$ = this.RequestService.doRequest({"id":10,"data":this.data});
     this.sendRequest$.subscribe((data) => {
       console.log(data);
@@ -108,5 +127,36 @@ export class TestParamComponent {
     
   }
 
+  formatLabel(value: number): string {
+    return `${value+"%"}`;
+  }
+
+  addCellected(){
+    this.cells.forEach((element: Cell) => {
+      if(element.id==this.cellModel){
+        this.cellSelected.push(element)
+        this.cellModel=-1;
+      }
+    });
+  }
+
+  removeCellected(idRm:number){
+  this.cellSelected = this.cellSelected.filter(({id})=> id !== idRm )
+  console.log("fonction")
+  }
+
+  addObserver(){
+    this.observers.forEach((element: Cell) => {
+      if(element.id==this.observerModel){
+        this.observerSelected.push(element)
+        this.observerModel=-1;
+      }
+    });
+  }
+
+  removeObserver(idRm:number){
+    this.observerSelected = this.observerSelected.filter(({id})=> id !== idRm )
+    console.log("fonction")
+    }
 
 }

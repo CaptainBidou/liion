@@ -32,8 +32,7 @@ import { MatPseudoCheckboxModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {HttpClientModule} from '@angular/common/http';
-
-
+import {MatSliderModule} from '@angular/material/slider';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +67,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatPseudoCheckboxModule,
     MatCheckboxModule,
     CanvasJSAngularChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSliderModule
 
 
   ],

@@ -5,10 +5,12 @@ export class Test {
     cells:number[];
     observers:number[];
     comment:string;
-    constructor(id_action: number, id_cell:number[], id_observer:number[], comment:string) {
+    cRate:number;
+    constructor(id_action: number, id_cell:number[], id_observer:number[], comment:string,cRate:number) {
         this.id_action = id_action;
         this.cells = id_cell;
         this.observers = id_observer;
         this.comment = comment;
+        this.cRate=cRate;
     }
 }
