@@ -6,7 +6,8 @@
     padding: 20px;
     margin: 20px;
     width:22%;
-    float:left;
+    flex: 1 1 0px;
+    /* float:left; */
 }
 
 .carte-right{
@@ -17,5 +18,27 @@
     padding: 20px;
     margin: 20px;
     width:22%;
-    margin-top:30px;
+    flex: 1 1 0px;
+    /* margin-top:30px; */
+}
+
+.carte-right-float{
+
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    width:22%;
+    /* margin-top:30px; */
+    /* float:right; */
+}
+
+.page{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* same size */
+
 }

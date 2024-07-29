@@ -50,6 +50,8 @@ export class TestParamComponent {
 
   fileUrl: any;
 
+  newCellName: string = "";
+
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
@@ -117,6 +119,10 @@ export class TestParamComponent {
 
   public getValueComment(event:any){
     this.commentModel = event.target.value;
+  }
+
+  public getValueCell(event:any){
+    this.newCellName = event.target.value;
   }
 
   public pushTest(){
@@ -197,6 +203,16 @@ export class TestParamComponent {
       URL.revokeObjectURL(objectUrl);
 
     });
+    }
+
+    public createCell(){
+      console.log(this.newCellName);
+      this.sendRequest$ = this.RequestService.doRequest({"id": 13, "data": {"name": this.newCellName}});
+      this.sendRequest$.subscribe((data) => {
+        console.log(data);
+        this.cells.push(new Cell(data, this.newCellName));
+        this.newCellName = "";
+      });
     }
 
 }
