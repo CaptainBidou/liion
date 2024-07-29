@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { RequestService } from '../request.service';
+import { DomSanitizer } from '@angular/platform-browser';
 // import the action model
 // import the cell model
 import { Action } from '../Model/Action.model';
@@ -47,7 +48,9 @@ export class TestParamComponent {
 
   cratePercent:number = 0;
 
-  constructor(RequestService: RequestService) { 
+  fileUrl: any;
+
+  constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
 
@@ -177,9 +180,22 @@ export class TestParamComponent {
       console.log(this.testModel);
       this.sendRequest$ = this.RequestService.doRequest({"id":8,"data":this.testModel});
     this.sendRequest$.subscribe((data) => {
-      console.log(data);
-      window.location.href =data;
-    
+      // console.log(data);
+      const blob = new Blob([data], { type: 'application/octet-stream' });
+      this.fileUrl=this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+      // window.location.href = this.fileUrl.changingThisBreaksApplicationSecurity;
+      const a = document.createElement('a')
+      const objectUrl = this.fileUrl.changingThisBreaksApplicationSecurity;
+      a.href = objectUrl
+      let name = ""
+      for(let i = 0; i < this.tests.length; i++){
+        if(this.tests[i].id == this.testModel){
+          name = this.tests[i].name + ".csv";
+      }}
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+
     });
     }
 
