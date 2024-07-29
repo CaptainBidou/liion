@@ -52,6 +52,11 @@ export class TestParamComponent {
 
   newCellName: string = "";
 
+  githubCommitName: string = "";
+  githubCommitPseudo: string = "";
+  githubCommitDate: string = "";
+  githubCommitPicture: string = "";
+
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
@@ -95,6 +100,8 @@ export class TestParamComponent {
         this.tests.push(new TestDownload(element.id,element.comment,element.cRate,element.action,element.cells,element.observers,element.time));
       });
     });
+
+    this.getLastCommitGithub();
 
   }
 
@@ -214,5 +221,18 @@ export class TestParamComponent {
         this.newCellName = "";
       });
     }
+
+    public getLastCommitGithub(){
+      this.sendRequest$ = this.RequestService.doGithubRequest({});
+      this.sendRequest$.subscribe((data) => {
+        console.log(data);
+        this.githubCommitName = data[0].commit.message;
+        this.githubCommitPseudo = data[0].commit.author.name;
+        this.githubCommitDate = data[0].commit.author.date;
+        this.githubCommitPicture = data[0].author.avatar_url;
+      });
+    }
+
+
 
 }

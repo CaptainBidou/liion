@@ -20,5 +20,10 @@ export class RequestService {
   public doRequest(data: any): Observable<any> {
     return this.http.post('http://127.0.0.1:5000', data);
   }
+  public doGithubRequest(data: any): Observable<any> {
+    // get the last 10 commits from the github repository
+    // CaptainBidou/LIBS
+    return this.http.get('https://api.github.com/repos/CaptainBidou/LIBS/commits?per_page=1');
+  }
 
 }

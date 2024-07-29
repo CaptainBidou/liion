@@ -112,6 +112,28 @@
             <button mat-button (click)="createCell()">Create cell</button>
         </mat-card-actions>
     </mat-card>
+
+
+
+
+
+
+
 </div>
 
+<mat-card class="carte-right-github">
+    <mat-card-header>
+        <mat-card-title>Last github update</mat-card-title>
+        <mat-card-subtitle>See the last github update</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- <p>{{githubCommitName}}</p>
+        <p>{{githubCommitDate | date:"dd MMM, yyyy "}}</p>
+        <p>{{githubCommitPseudo}}</p>
+        <img src="{{githubCommitPicture}}" alt="github commit picture" width="100" height="100"> -->
+        <p><b>By:</b><img src="{{githubCommitPicture}}" alt="github commit picture" width="15" height="15"> {{githubCommitPseudo}}</p>
+        <p><b>On:</b> {{githubCommitDate | date:"dd MMM, yyyy "}}</p>
+        <p><b>Commit:</b> {{githubCommitName}}</p>
+    </mat-card-content>
+</mat-card>
 
