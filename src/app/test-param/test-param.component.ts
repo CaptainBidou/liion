@@ -9,6 +9,7 @@ import { Cell } from '../Model/Cell.model';
 import { Estimator } from '../Model/Estimator.model';
 import { Test } from '../Model/Test.model';
 import { exit } from 'process';
+import {TestDownload} from '../Model/TestDownload';
 
 @Component({
   selector: 'app-test-param',
@@ -38,6 +39,10 @@ export class TestParamComponent {
   sendRequest$: Observable<any>;
   data:Test;
   
+  tests:TestDownload[] = [];
+  test$: Observable<any>;
+  testModel:number;
+
   RequestService: RequestService;
 
   cratePercent:number = 0;
@@ -50,10 +55,12 @@ export class TestParamComponent {
     this.cell$ = RequestService.doRequest({"id": 2, "data": {"nothing": "nothing"}});
     this.observer$ = RequestService.doRequest({"id": 3, "data": {"nothing": "nothing"}});
     this.sendRequest$ = RequestService.doRequest({"id":10,"data":this.data});
+    this.test$ = RequestService.doRequest({"id": 7, "data": {"nothing": "nothing"}});
 
     this.cellModel=-1;
     this.actionModel=-1;
     this.observerModel=-1;
+    this.testModel=-1;
   }
   ngOnInit() {
 
@@ -75,6 +82,12 @@ export class TestParamComponent {
       console.log(data);
       data.forEach((element: any) => {
         this.observers.push(new Estimator(element[0], element[1]));
+      });
+    });
+    this.test$.subscribe((data) => {
+      console.log(data);
+      data.forEach((element: any) => {
+        this.tests.push(new TestDownload(element.id,element.comment,element.cRate,element.action,element.cells,element.observers,element.time));
       });
     });
 
@@ -157,6 +170,17 @@ export class TestParamComponent {
   removeObserver(idRm:number){
     this.observerSelected = this.observerSelected.filter(({id})=> id !== idRm )
     console.log("fonction")
+    }
+
+
+    public downloadTest(){
+      console.log(this.testModel);
+      this.sendRequest$ = this.RequestService.doRequest({"id":8,"data":this.testModel});
+    this.sendRequest$.subscribe((data) => {
+      console.log(data);
+      window.location.href =data;
+    
+    });
     }
 
 }
