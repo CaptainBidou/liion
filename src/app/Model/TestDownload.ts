@@ -12,7 +12,7 @@ export class TestDownload {
     time:Date;
     name:string;
 
-    constructor(id: number,comment:string,cRate:number,action:Action,cells:string[],observers:string[],time:Date) {
+    constructor(id: number,comment:string,cRate:number,action:any,cells:string[],observers:string[],time:Date) {
         this.id = id;
         this.comment = comment;
         this.cRate=cRate;
@@ -24,7 +24,8 @@ export class TestDownload {
         this.cells = this.cells.slice(0, -1);
         this.observers = observers;
         this.time= new Date(time);
-        if(action.id == 3 || action.id == 1 || action.id == 5){
+        console.log(action)
+        if(action.id_action == 3 || action.id_action == 1 || action.id_action == 5){
             this.name = this.cells + "_"+this.action.toString() +"_"+cRate.toString() +"_" + this.time.getDate()+"_"+this.time.getMonth();
         }else{
         this.name = this.cells + "_"+this.action.toString() +"_"+ this.time.getDate()+"_"+this.time.getMonth();//time must be dd_mm
