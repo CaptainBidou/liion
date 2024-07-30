@@ -57,6 +57,10 @@ export class TestParamComponent {
   githubCommitDate: string = "";
   githubCommitPicture: string = "";
 
+  pointSoc = [];
+  pointSocEstimator = [];
+  chartS: any;
+
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
@@ -231,6 +235,31 @@ export class TestParamComponent {
         this.githubCommitDate = data[0].commit.author.date;
         this.githubCommitPicture = data[0].author.avatar_url;
       });
+    }
+
+    chartOptionsSoc = {
+      exportEnabled: true,
+      title: {
+      text: "SOC"
+      },
+      axisY:{
+      minimum: 0,
+      maximum: 1.1,
+      },
+  
+      data: [{
+      type: "line",
+      dataPoints: this.pointSoc
+      },
+      {
+      type: "line",
+      dataPoints: this.pointSocEstimator
+      }
+    ]
+    }
+    getChartInstanceSOC(chart: object) {
+      this.chartS = chart;
+      this.chartS.render()
     }
 
 
