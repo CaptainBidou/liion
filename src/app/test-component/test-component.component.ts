@@ -44,10 +44,13 @@ pointVoltageEstimator:any[] = [];
 pointCurrent:any[] = [];
 pointSoc:any[] = [];
 pointSocEstimator:any[] = [];
+pointTemperature:any[] = [];
+pointTemperatureEstimator:any[] = [];
 
 chartV: any;
 chartS: any;
 chartC: any;
+chartT: any;
 
 actionStart:Boolean = false;
 
@@ -145,6 +148,32 @@ console.log(this.cellsName);
 	]
 	}
 
+	chartOptionsTemperature = {
+		exportEnabled: true,
+		title: {
+		  text: "Surface temperature"
+		},
+		axisY:{
+		  title:"Celsius",
+		  minimum: 0,
+		  maximum: 50,
+		},
+  
+		data: [{
+		  showInLegend: true,
+		  name: "Temperature measured",
+		  type: "line",
+		  dataPoints: this.pointTemperature
+		},
+		{
+		  showInLegend: true,
+		  name: "Temperature estimated",
+		  type: "line",
+		  dataPoints: this.pointTemperatureEstimator
+		  }
+	  ]
+	  }
+
 	chartOptionsVoltage = {
 		exportEnabled: true,
 		title: {
@@ -214,10 +243,13 @@ console.log(this.cellsName);
 				this.pointSoc.push({x:timeCount,y:this.soc})
 				this.pointVoltageEstimator.push({x:timeCount,y:decode.estimator_voltage})
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
+				this.pointTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointTemperatureEstimator.push({x:timeCount,y:decode.estimator_surface_temperature})
 			});
 			this.chartC.render()
 			this.chartS.render()
 			this.chartV.render()
+			this.chartT.render()
 		}
 			if(this.actionStart)
 				setTimeout(() => {this.updateAllCharts()}, 2000);
@@ -246,10 +278,13 @@ console.log(this.cellsName);
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
 				this.pointCurrent.push({x:timeCount,y:this.current})
 				this.pointSoc.push({x:timeCount,y:this.soc})
+				this.pointTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointTemperatureEstimator.push({x:timeCount,y:decode.estimator_surface_temperature})
 			});
 			this.chartC.render()
 			this.chartS.render()
 			this.chartV.render()
+			this.chartT.render()
 		});
 	}
 
@@ -268,6 +303,10 @@ console.log(this.cellsName);
 	getChartInstanceVoltage(chart: object) {
 		this.chartV = chart;
 		this.chartV.render()
+	}
+	getChartInstanceTemperature(chart: object) {
+		this.chartT = chart;
+		this.chartT.render()
 	}
 
 

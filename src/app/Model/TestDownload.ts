@@ -26,9 +26,9 @@ export class TestDownload {
         this.time= new Date(time);
         console.log(action)
         if(action.id_action == 3 || action.id_action == 1 || action.id_action == 5){
-            this.name = this.cells + "_"+this.action.toString() +"_"+cRate.toString() +"_" + this.time.getDate()+"_"+this.time.getMonth();
+            this.name = this.cells + "_"+this.action.toString()+cRate.toString() +"_" + this.time.getDate()+this.time.getMonth()+this.time.getFullYear();
         }else{
-        this.name = this.cells + "_"+this.action.toString() +"_"+ this.time.getDate()+"_"+this.time.getMonth();//time must be dd_mm
+        this.name = this.cells + "_"+this.action.toString() +"_"+this.time.getDate()+this.time.getMonth()+this.time.getFullYear();
         }
     }
 }
