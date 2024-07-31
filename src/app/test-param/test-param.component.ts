@@ -140,6 +140,7 @@ allMeasureData:any[] = [];
         i=i+1
       });
       console.log(this.pointSoc);
+      this.chartS.render()
     }
 
       });

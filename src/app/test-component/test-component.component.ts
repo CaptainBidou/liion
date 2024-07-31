@@ -125,15 +125,20 @@ console.log(this.cellsName);
 		text: "SOC"
 	  },
 	  axisY:{
+		title:"SOC",
 		minimum: 0,
 		maximum: 1.1,
 	  },
 
 	  data: [{
+		showInLegend: true,
+		name: "SOC computed",
 		type: "line",
 		dataPoints: this.pointSoc
 	  },
 	  {
+		showInLegend: true,
+		name: "SOC estimated",
 		type: "line",
 		dataPoints: this.pointSocEstimator
 		}
@@ -146,14 +151,19 @@ console.log(this.cellsName);
 		  text: "Voltage"
 		},
 		axisY:{
+			title:"Volt",
 			minimum: 0,
 			maximum: 5.5,
 		  },
 		data: [{
+		showInLegend: true,
+		name: "Voltage Measured",
 		  type: "line",
 		  dataPoints: this.pointVoltage
 		},
 	  {
+		showInLegend: true,
+		name: "Voltage Estimated",
 		type: "line",
 		dataPoints: this.pointVoltageEstimator
 		}]
@@ -164,6 +174,7 @@ console.log(this.cellsName);
 		  text: "Current"
 		},
 		axisY:{
+			title:"Ampere",
 			minimum: 0,
 			maximum: 5.5,
 		  },
