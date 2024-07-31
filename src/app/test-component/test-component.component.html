@@ -22,6 +22,12 @@
                 <mat-checkbox class="example-margin" [disabled]="true" *ngFor="let act of actions" [value]="'true'" [checked]="act.id==actionSelected.id?true:false">{{act.name}}</mat-checkbox>
               </section>
             </span>
+            <span>
+                <section class="example-section">
+                    Estimator choosen :
+                    <mat-checkbox class="example-margin" [disabled]="true" *ngFor="let est of observers" [value]="'true'" [checked]="this.isEstimatorUsed(est.id)?true:false">{{est.name}}</mat-checkbox>
+                  </section>
+                </span>
         </div>
 
         <div>

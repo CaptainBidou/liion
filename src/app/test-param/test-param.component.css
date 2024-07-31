@@ -1,66 +1,57 @@
-.carte-left{
+.carte{
 
     background-color: #f5f5f5;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 20px;
-    width:22%;
     /* float:left; */
 }
 
-.carte-right{
-
+.carte-milieu{
     background-color: #f5f5f5;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin: 20px;
-    width:22%;
-    /* margin-top:30px; */
+    margin-top: 20px;
 }
-
-.carte-right-float{
-
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 20px;
-    width:22%;
-    /* margin-top:30px; */
-    /* float:right; */
-}
-
 .page{
+    /* display: flex;
+    align-items: flex-;
+    justify-content: space-between;
+    flex-wrap: wrap; */
+}
+
+.page-milieu{
+    width:45%;
+}
+
+.page-milieu-top{
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.grandPage{
+    display: flex;
+    align-items: flex-start;
+    /* justify-content: space-between; */
+    justify-content: center;
     flex-wrap: wrap;
     /* same size */
-
+    flex:auto;
 }
 
-.carte-right-github{
-
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    margin-right:20px;
-    width:22%;
-    float:right;
+.logo{
+    position:absolute;
+    width:20%;
+    right:20px;
 }
 
-.carte-left-github{
-
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    margin-left:20px;
-    width:22%;
-    float:left;
+.logo-discord{
+    position:absolute;
+    width:10%;
+    right:20px;
+    top:20px;
 }

@@ -51,7 +51,9 @@ chartC: any;
 
 actionStart:Boolean = false;
 
-
+observers : Estimator[] = [];
+observer$: Observable<any>;
+observerSelected:Estimator[] = [];
 
 constructor(requestService: RequestService, private router: Router) { 
 	this.id = this.route.snapshot.params['id'];
@@ -62,6 +64,7 @@ constructor(requestService: RequestService, private router: Router) {
 	this.startStop$ = new Observable<any>();
 	this.measure$ = requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": this.lastMeasure}});
 	this.allMeasure$ = requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": 0}});
+	this.observer$ = requestService.doRequest({"id": 3, "data": {"nothing": "nothing"}});
 	this.soc = 1
 }
 
@@ -77,6 +80,10 @@ ngOnInit() {
 	this.comment = data.comment;
 	this.actionSelected = new Action(data.action.id_action,data.action.name)
 	this.crate = data.cRate;
+	data.observers.forEach((element: any) => {
+		this.observerSelected.push(new Estimator(element[0], element[1]));
+	});
+
 });
 
 
@@ -88,10 +95,25 @@ console.log(this.cellsName);
 		});
 	  });
 
+	  this.observer$.subscribe((data) => {  
+		console.log(data);
+		data.forEach((element: any) => {
+		  this.observers.push(new Estimator(element[0], element[1]));
+		});
+	  });
+
 	  this.getAllPoints();
 }
 
 
+	isEstimatorUsed(id:number){
+		let res = false;
+		this.observerSelected.forEach(element => {
+			if(element.id == id)
+				res = true
+		});
+		return res;
+	}
 
 	
 	chartOptionsSoc = {

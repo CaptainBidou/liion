@@ -61,6 +61,297 @@ export class TestParamComponent {
   pointSocEstimator = [];
   chartS: any;
 
+  futebol$ : Observable<any>;
+futebolObject:any;
+  // futebolObject =  {
+  //   "get": "teams/statistics",
+  //   "parameters": {
+  //       "team": "126",
+  //       "league": "71",
+  //       "season": "2024"
+  //   },
+  //   "errors": [],
+  //   "results": 11,
+  //   "paging": {
+  //       "current": 1,
+  //       "total": 1
+  //   },
+  //   "response": {
+  //       "league": {
+  //           "id": 71,
+  //           "name": "Serie A",
+  //           "country": "Brazil",
+  //           "logo": "https://media.api-sports.io/football/leagues/71.png",
+  //           "flag": "https://media.api-sports.io/flags/br.svg",
+  //           "season": 2024
+  //       },
+  //       "team": {
+  //           "id": 126,
+  //           "name": "Sao Paulo",
+  //           "logo": "https://media.api-sports.io/football/teams/126.png"
+  //       },
+  //       "form": "LLWDWWWDDLLWWWWLWDDL",
+  //       "fixtures": {
+  //           "played": {
+  //               "home": 10,
+  //               "away": 10,
+  //               "total": 20
+  //           },
+  //           "wins": {
+  //               "home": 6,
+  //               "away": 3,
+  //               "total": 9
+  //           },
+  //           "draws": {
+  //               "home": 2,
+  //               "away": 3,
+  //               "total": 5
+  //           },
+  //           "loses": {
+  //               "home": 2,
+  //               "away": 4,
+  //               "total": 6
+  //           }
+  //       },
+  //       "goals": {
+  //           "for": {
+  //               "total": {
+  //                   "home": 15,
+  //                   "away": 13,
+  //                   "total": 28
+  //               },
+  //               "average": {
+  //                   "home": "1.5",
+  //                   "away": "1.3",
+  //                   "total": "1.4"
+  //               },
+  //               "minute": {
+  //                   "0-15": {
+  //                       "total": 7,
+  //                       "percentage": "24.14%"
+  //                   },
+  //                   "16-30": {
+  //                       "total": 4,
+  //                       "percentage": "13.79%"
+  //                   },
+  //                   "31-45": {
+  //                       "total": 5,
+  //                       "percentage": "17.24%"
+  //                   },
+  //                   "46-60": {
+  //                       "total": 4,
+  //                       "percentage": "13.79%"
+  //                   },
+  //                   "61-75": {
+  //                       "total": 3,
+  //                       "percentage": "10.34%"
+  //                   },
+  //                   "76-90": {
+  //                       "total": 5,
+  //                       "percentage": "17.24%"
+  //                   },
+  //                   "91-105": {
+  //                       "total": 1,
+  //                       "percentage": "3.45%"
+  //                   },
+  //                   "106-120": {
+  //                       "total": null,
+  //                       "percentage": null
+  //                   }
+  //               }
+  //           },
+  //           "against": {
+  //               "total": {
+  //                   "home": 8,
+  //                   "away": 13,
+  //                   "total": 21
+  //               },
+  //               "average": {
+  //                   "home": "0.8",
+  //                   "away": "1.3",
+  //                   "total": "1.1"
+  //               },
+  //               "minute": {
+  //                   "0-15": {
+  //                       "total": 3,
+  //                       "percentage": "15.00%"
+  //                   },
+  //                   "16-30": {
+  //                       "total": 2,
+  //                       "percentage": "10.00%"
+  //                   },
+  //                   "31-45": {
+  //                       "total": 3,
+  //                       "percentage": "15.00%"
+  //                   },
+  //                   "46-60": {
+  //                       "total": 6,
+  //                       "percentage": "30.00%"
+  //                   },
+  //                   "61-75": {
+  //                       "total": 1,
+  //                       "percentage": "5.00%"
+  //                   },
+  //                   "76-90": {
+  //                       "total": 3,
+  //                       "percentage": "15.00%"
+  //                   },
+  //                   "91-105": {
+  //                       "total": 2,
+  //                       "percentage": "10.00%"
+  //                   },
+  //                   "106-120": {
+  //                       "total": null,
+  //                       "percentage": null
+  //                   }
+  //               }
+  //           }
+  //       },
+  //       "biggest": {
+  //           "streak": {
+  //               "wins": 4,
+  //               "draws": 2,
+  //               "loses": 2
+  //           },
+  //           "wins": {
+  //               "home": "3-1",
+  //               "away": "0-3"
+  //           },
+  //           "loses": {
+  //               "home": "1-2",
+  //               "away": "4-1"
+  //           },
+  //           "goals": {
+  //               "for": {
+  //                   "home": 3,
+  //                   "away": 3
+  //               },
+  //               "against": {
+  //                   "home": 2,
+  //                   "away": 4
+  //               }
+  //           }
+  //       },
+  //       "clean_sheet": {
+  //           "home": 4,
+  //           "away": 3,
+  //           "total": 7
+  //       },
+  //       "failed_to_score": {
+  //           "home": 2,
+  //           "away": 3,
+  //           "total": 5
+  //       },
+  //       "penalty": {
+  //           "scored": {
+  //               "total": 2,
+  //               "percentage": "100.00%"
+  //           },
+  //           "missed": {
+  //               "total": 0,
+  //               "percentage": "0%"
+  //           },
+  //           "total": 2
+  //       },
+  //       "lineups": [
+  //           {
+  //               "formation": "4-2-3-1",
+  //               "played": 12
+  //           },
+  //           {
+  //               "formation": "3-4-2-1",
+  //               "played": 3
+  //           },
+  //           {
+  //               "formation": "3-4-1-2",
+  //               "played": 2
+  //           },
+  //           {
+  //               "formation": "4-4-2",
+  //               "played": 2
+  //           },
+  //           {
+  //               "formation": "4-1-3-2",
+  //               "played": 1
+  //           }
+  //       ],
+  //       "cards": {
+  //           "yellow": {
+  //               "0-15": {
+  //                   "total": 5,
+  //                   "percentage": "8.47%"
+  //               },
+  //               "16-30": {
+  //                   "total": 4,
+  //                   "percentage": "6.78%"
+  //               },
+  //               "31-45": {
+  //                   "total": 11,
+  //                   "percentage": "18.64%"
+  //               },
+  //               "46-60": {
+  //                   "total": 9,
+  //                   "percentage": "15.25%"
+  //               },
+  //               "61-75": {
+  //                   "total": 8,
+  //                   "percentage": "13.56%"
+  //               },
+  //               "76-90": {
+  //                   "total": 14,
+  //                   "percentage": "23.73%"
+  //               },
+  //               "91-105": {
+  //                   "total": 7,
+  //                   "percentage": "11.86%"
+  //               },
+  //               "106-120": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "": {
+  //                   "total": 1,
+  //                   "percentage": "1.69%"
+  //               }
+  //           },
+  //           "red": {
+  //               "0-15": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "16-30": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "31-45": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "46-60": {
+  //                   "total": 1,
+  //                   "percentage": "50.00%"
+  //               },
+  //               "61-75": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "76-90": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               },
+  //               "91-105": {
+  //                   "total": 1,
+  //                   "percentage": "50.00%"
+  //               },
+  //               "106-120": {
+  //                   "total": null,
+  //                   "percentage": null
+  //               }
+  //           }
+  //       }
+  //   }
+  // }
+
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.data = new Test(-1, [-1], [-1], "",0);
     this.RequestService = RequestService;
@@ -70,6 +361,7 @@ export class TestParamComponent {
     this.observer$ = RequestService.doRequest({"id": 3, "data": {"nothing": "nothing"}});
     this.sendRequest$ = RequestService.doRequest({"id":10,"data":this.data});
     this.test$ = RequestService.doRequest({"id": 7, "data": {"nothing": "nothing"}});
+    this.futebol$ = RequestService.doFutbolRequestGet({});
 
     this.cellModel=-1;
     this.actionModel=-1;
@@ -105,7 +397,13 @@ export class TestParamComponent {
       });
     });
 
+    this.futebol$.subscribe((data) => {
+      console.log(data);
+      this.futebolObject = data;
+    });
+
     this.getLastCommitGithub();
+
 
   }
 
@@ -262,6 +560,8 @@ export class TestParamComponent {
       this.chartS.render()
     }
 
+    fileChange($event:any){
 
+    }
 
 }
