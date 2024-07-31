@@ -79,6 +79,9 @@ ngOnInit() {
 	this.date = new Date(data.time);
 	this.comment = data.comment;
 	this.actionSelected = new Action(data.action.id_action,data.action.name)
+	if(this.actionSelected.id == 1)
+		this.soc=0;
+
 	this.crate = data.cRate;
 	data.observers.forEach((element: any) => {
 		this.observerSelected.push(new Estimator(element[0], element[1]));
@@ -182,8 +185,14 @@ console.log(this.cellsName);
 				this.voltage=parseFloat(decode.output_voltage);
 				if(this.pointCurrent.length >= 2){
 					let lastCurrent = this.pointCurrent[this.pointCurrent.length-2]
-					this.soc = this.soc-lastCurrent.y*(1/(3600*3.08))
+					if(this.actionSelected.id==1){
+						this.soc = this.soc+this.current*(1/(3600*3.08))
+					}
+					else{
+						this.soc = this.soc-lastCurrent.y*(1/(3600*3.08))
+					}
 
+					
 
 				}
 					
@@ -217,8 +226,6 @@ console.log(this.cellsName);
 				if(this.pointCurrent.length >= 2){
 					let lastCurrent = this.pointCurrent[this.pointCurrent.length-2]
 					this.soc = this.soc-lastCurrent.y*(1/(3600*3.08))
-
-
 				}
 					
 				let dateMesure = new Date(decode.time)

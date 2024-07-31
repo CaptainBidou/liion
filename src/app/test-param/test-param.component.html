@@ -124,6 +124,7 @@
         <mat-card-header>
             <mat-card-title>Last test graph</mat-card-title>
             <mat-card-subtitle>Here is the last test soc graph</mat-card-subtitle>
+            <mat-card-subtitle>{{this.lastTestName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <canvasjs-chart [options]="chartOptionsSoc" [styles]="{width: '100%', height:'400px'}" (chartInstance)="getChartInstanceSOC($event)"></canvasjs-chart>
