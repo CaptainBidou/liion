@@ -44,8 +44,11 @@ pointVoltageEstimator:any[] = [];
 pointCurrent:any[] = [];
 pointSoc:any[] = [];
 pointSocEstimator:any[] = [];
-pointTemperature:any[] = [];
-pointTemperatureEstimator:any[] = [];
+pointSurfaceTemperature:any[] = [];
+pointSurfaceEstimatorTemperature:any[] = [];
+pointAmbientTemperature:any[] = [];
+pointCoreEstimatorTemperature:any[] = [];
+
 
 chartV: any;
 chartS: any;
@@ -161,15 +164,27 @@ console.log(this.cellsName);
   
 		data: [{
 		  showInLegend: true,
-		  name: "Temperature measured",
+		  name: "Surface temperature measured",
 		  type: "line",
-		  dataPoints: this.pointTemperature
+		  dataPoints: this.pointSurfaceTemperature
 		},
 		{
 		  showInLegend: true,
-		  name: "Temperature estimated",
+		  name: "Surface temperature estimated",
 		  type: "line",
-		  dataPoints: this.pointTemperatureEstimator
+		  dataPoints: this.pointSurfaceEstimatorTemperature
+		  },
+		  {
+			showInLegend: true,
+			name: "Ambient temperature measured",
+			type: "line",
+			dataPoints: this.pointAmbientTemperature
+		  },
+		  {
+			showInLegend: true,
+			name: "Core temperature estimated",
+			type: "line",
+			dataPoints: this.pointCoreEstimatorTemperature
 		  }
 	  ]
 	  }
@@ -243,8 +258,10 @@ console.log(this.cellsName);
 				this.pointSoc.push({x:timeCount,y:this.soc})
 				this.pointVoltageEstimator.push({x:timeCount,y:decode.estimator_voltage})
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
-				this.pointTemperature.push({x:timeCount,y:decode.surface_temperature})
-				this.pointTemperatureEstimator.push({x:timeCount,y:decode.estimator_surface_temperature})
+				this.pointSurfaceTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointSurfaceEstimatorTemperature.push({x:timeCount,y:decode.estimator_surface_temperature})
+				this.pointAmbientTemperature.push({x:timeCount,y:decode.ambient_temperature})
+				this.pointCoreEstimatorTemperature.push({x:timeCount,y:decode.estimator_core_temperature})
 			});
 			this.chartC.render()
 			this.chartS.render()
@@ -278,8 +295,10 @@ console.log(this.cellsName);
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
 				this.pointCurrent.push({x:timeCount,y:this.current})
 				this.pointSoc.push({x:timeCount,y:this.soc})
-				this.pointTemperature.push({x:timeCount,y:decode.surface_temperature})
-				this.pointTemperatureEstimator.push({x:timeCount,y:decode.estimator_surface_temperature})
+				this.pointSurfaceTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointSurfaceEstimatorTemperature.push({x:timeCount,y:decode.estimator_surface_temperature})
+				this.pointAmbientTemperature.push({x:timeCount,y:decode.ambient_temperature})
+				this.pointCoreEstimatorTemperature.push({x:timeCount,y:decode.estimator_core_temperature})
 			});
 			this.chartC.render()
 			this.chartS.render()

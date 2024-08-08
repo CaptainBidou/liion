@@ -68,7 +68,7 @@ lastTest$: Observable<any>;
 lastTestid:number = 0;
 lastTestName:string="";
 lastTestData:any=0;
-allMeasure$: Observable<any>;
+//allMeasure$: Observable<any>;
 allMeasureData:any[] = [];
 
 
@@ -84,7 +84,7 @@ allMeasureData:any[] = [];
     this.test$ = RequestService.doRequest({"id": 7, "data": {"nothing": "nothing"}});
     this.futebol$ = RequestService.doFutbolRequestGet({});
     this.lastTest$ = RequestService.doRequest({"id": 6, "data": {"id_test": this.lastTestid}});
-    this.allMeasure$ = RequestService.doRequest({"id": 4, "data": {"id_test": this.lastTestid,"id_last_measure": 0}});
+    //this.allMeasure$ = RequestService.doRequest({"id": 4, "data": {"id_test": this.lastTestid,"id_last_measure": 0}});
 
     this.cellModel=-1;
     this.actionModel=-1;
@@ -128,22 +128,6 @@ allMeasureData:any[] = [];
       });
       this.lastTest$ = this.RequestService.doRequest({"id": 6, "data": {"id_test": this.lastTestid}});
       this.lastTest$.subscribe((data) => {console.log(data);this.lastTestData = data;});
-      this.allMeasure$ = this.RequestService.doRequest({"id": 4, "data": {"id_test": this.lastTestid,"id_last_measure": 0}});
-      this.allMeasure$.subscribe((data) => {console.log(data);
-      this.allMeasureData = data;
-      let i = 0
-      if(this.allMeasureData.length!=0){
-      this.allMeasureData.forEach((element: any) => {
-          
-        element=JSON.parse(element);
-        this.pointSoc.push({x:i,y:element.estimator_soc});
-        i=i+1
-      });
-      console.log(this.pointSoc);
-      this.chartS.render()
-    }
-
-      });
     });
     
 
