@@ -23,7 +23,7 @@ crate:number=0;
 
 actions: Action[] = [];
 action$: Observable<any>;
-actionSelected:Action = new Action(0,"feur")
+actionSelected:Action = new Action(0,"feur","feur");
 
 cells : Cell[];
 cellsName = "";
@@ -84,7 +84,7 @@ ngOnInit() {
 	this.cellsName = this.cellsName.slice(0, -2);
 	this.date = new Date(data.time);
 	this.comment = data.comment;
-	this.actionSelected = new Action(data.action.id_action,data.action.name)
+	this.actionSelected = new Action(data.action.id_action,data.action.name,"")
 	if(this.actionSelected.id == 1)
 		this.soc=0;
 
@@ -100,7 +100,7 @@ console.log(this.cellsName);
 	this.action$.subscribe((data) => {
 		console.log(data);
 		data.forEach((element: any) => {
-		  this.actions.push(new Action(element[0], element[1]));
+		  this.actions.push(new Action(element[0], element[1],element[2]));
 		});
 	  });
 

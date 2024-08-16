@@ -97,7 +97,7 @@ allMeasureData:any[] = [];
     this.action$.subscribe((data) => {
       console.log(data);
       data.forEach((element: any) => {
-        this.actions.push(new Action(element[0], element[1]));
+        this.actions.push(new Action(element[0], element[1],element[2]));
       });
     });
 
