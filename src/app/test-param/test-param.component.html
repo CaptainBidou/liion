@@ -20,7 +20,7 @@
             <div *ngIf="actionModel==3 || actionModel==1 || actionModel==5">
                 <mat-divider></mat-divider>
                 <p>C-rate (%) :</p>
-            <mat-slider  min="0" max="100" step="1"  showTickMarks discrete [displayWith]="formatLabel">
+            <mat-slider  min="0" max="200" step="1"  showTickMarks discrete [displayWith]="formatLabel">
                 <input matSliderThumb [(value)]="cratePercent">
               </mat-slider>
             </div>
@@ -122,12 +122,16 @@
     
     <mat-card class="carte">
         <mat-card-header>
-            <mat-card-title>Last test graph</mat-card-title>
-            <mat-card-subtitle>Here is the last test soc graph</mat-card-subtitle>
-            <mat-card-subtitle>{{this.lastTestName}}</mat-card-subtitle>
+            <mat-card-title>Cells SOC</mat-card-title>
+            <mat-card-subtitle>Here is the SOC of each cells</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-            <canvasjs-chart [options]="chartOptionsSoc" [styles]="{width: '100%', height:'400px'}" (chartInstance)="getChartInstanceSOC($event)"></canvasjs-chart>
+        <mat-card-content >
+            <mat-list>
+                <span *ngFor="let cell of cells" [style.display]="'flex'" class="flexiCell">
+                    <p><b>{{cell.name}} :</b></p>
+                        <mat-progress-bar mode="determinate" [value]="cell.soc*100" [style.margin-top]="'2%'" [style.width]="'50%'" ></mat-progress-bar>
+                </span>
+            </mat-list>
         </mat-card-content>
     </mat-card>
     

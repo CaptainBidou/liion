@@ -105,6 +105,8 @@ allMeasureData:any[] = [];
       console.log(data);
       data.forEach((element: any) => {
         this.cells.push(new Cell(element[0], element[1]));
+        if(element[2]!=null)
+          this.cells[this.cells.length-1].setSOC(element[2]);
       });
     });
     this.observer$.subscribe((data) => {  
@@ -502,7 +504,7 @@ allMeasureData:any[] = [];
   }
 
   addObserver(){
-    this.observers.forEach((element: Cell) => {
+    this.observers.forEach((element: Estimator) => {
       if(element.id==this.observerModel){
         this.observerSelected.push(element)
         this.observerModel=-1;
