@@ -44,7 +44,8 @@ pointVoltageEstimator:any[] = [];
 pointCurrent:any[] = [];
 pointSoc:any[] = [];
 pointSocEstimator:any[] = [];
-pointSurfaceTemperature:any[] = [];
+pointSurfaceTemperaturePlus:any[] = [];
+pointSurfaceTemperatureMinus:any[] = [];
 pointSurfaceEstimatorTemperature:any[] = [];
 pointAmbientTemperature:any[] = [];
 pointCoreEstimatorTemperature:any[] = [];
@@ -164,10 +165,16 @@ console.log(this.cellsName);
   
 		data: [{
 		  showInLegend: true,
-		  name: "Surface temperature measured",
+		  name: "Surface temperature measured pole +",
 		  type: "line",
-		  dataPoints: this.pointSurfaceTemperature
+		  dataPoints: this.pointSurfaceTemperaturePlus
 		},
+		{
+			showInLegend: true,
+			name: "Surface temperature measured pole -",
+			type: "line",
+			dataPoints: this.pointSurfaceTemperatureMinus
+		  },
 		{
 		  showInLegend: true,
 		  name: "Surface temperature estimated",
@@ -258,7 +265,8 @@ console.log(this.cellsName);
 				this.pointSoc.push({x:timeCount,y:this.soc})
 				this.pointVoltageEstimator.push({x:timeCount,y:decode.estimator_voltage})
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
-				this.pointSurfaceTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointSurfaceTemperaturePlus.push({x:timeCount,y:decode.surface_temperature_plus})
+				this.pointSurfaceTemperatureMinus.push({x:timeCount,y:decode.surface_temperature_minus})
 				this.pointSurfaceEstimatorTemperature.push({x:timeCount,y:decode.estimator_surface_temperature})
 				this.pointAmbientTemperature.push({x:timeCount,y:decode.ambient_temperature})
 				this.pointCoreEstimatorTemperature.push({x:timeCount,y:decode.estimator_core_temperature})
@@ -295,7 +303,8 @@ console.log(this.cellsName);
 				this.pointSocEstimator.push({x:timeCount,y:decode.estimator_soc})
 				this.pointCurrent.push({x:timeCount,y:this.current})
 				this.pointSoc.push({x:timeCount,y:this.soc})
-				this.pointSurfaceTemperature.push({x:timeCount,y:decode.surface_temperature})
+				this.pointSurfaceTemperaturePlus.push({x:timeCount,y:decode.surface_temperature_plus})
+				this.pointSurfaceTemperatureMinus.push({x:timeCount,y:decode.surface_temperature_minus})
 				this.pointSurfaceEstimatorTemperature.push({x:timeCount,y:decode.estimator_surface_temperature})
 				this.pointAmbientTemperature.push({x:timeCount,y:decode.ambient_temperature})
 				this.pointCoreEstimatorTemperature.push({x:timeCount,y:decode.estimator_core_temperature})
