@@ -7,6 +7,7 @@ import { Cell } from '../Model/Cell.model';
 import { Estimator } from '../Model/Estimator.model';
 import { Test } from '../Model/Test.model';
 import { Measure } from '../Model/Measure.model';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-test-component',
@@ -55,6 +56,7 @@ chartV: any;
 chartS: any;
 chartC: any;
 chartT: any;
+lastData:any[] = [1];
 
 actionStart:Boolean = false;
 
@@ -239,7 +241,8 @@ console.log(this.cellsName);
 		this.measure$ = this.requestService.doRequest({"id": 4, "data": {"id_test": this.id,"id_last_measure": this.lastMeasure}});
 		this.measure$.subscribe((data) => {
 			console.log(data);
-			if (data != null){
+			if (data != null ){
+				
 			data.forEach(element => {
 				let decode = JSON.parse(element)
 				this.lastMeasure=decode.id;
@@ -275,6 +278,12 @@ console.log(this.cellsName);
 			this.chartS.render()
 			this.chartV.render()
 			this.chartT.render()
+		}
+		if(this.lastData.length == data.length){
+			this.actionStart = false;
+		}
+		if(data.length == 0){
+			this.lastData = data;
 		}
 			if(this.actionStart)
 				setTimeout(() => {this.updateAllCharts()}, 2000);
