@@ -1,0 +1,25 @@
+
+<mat-card class="popUp">
+    
+    <mat-card-header>
+        <mat-card-title>
+        
+        <h1>Warning</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-icon color="warn">warning</mat-icon>
+    <mat-card-content>
+        <p>
+        You are about to apply a profile to the cell. Are you sure you want to continue ?
+        </p>
+        
+    </mat-card-content>
+    <p>
+        <b>Voltage :</b> {{voltage}} V
+        <b>Current :</b> {{current}} A
+    </p>
+    <mat-card-actions>
+        <button mat-button (click)="close()">Yes</button>
+        <button mat-button (click)="back()" color="warn">No</button>
+    </mat-card-actions>
+</mat-card>

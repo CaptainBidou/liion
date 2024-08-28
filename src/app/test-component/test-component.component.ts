@@ -64,6 +64,8 @@ observers : Estimator[] = [];
 observer$: Observable<any>;
 observerSelected:Estimator[] = [];
 
+popUp:Boolean = true;
+
 constructor(requestService: RequestService, private router: Router) { 
 	this.id = this.route.snapshot.params['id'];
 	this.requestService = requestService;
@@ -350,6 +352,7 @@ console.log(this.cellsName);
 
 	startTest(){
 		this.startStop$ = this.requestService.doRequest({"id": 11, "data": {"id_test": this.id}});
+		this.lastData = [1];
 		this.startStop$.subscribe((data) => {
 			console.log(data);
 			this.updateAllCharts();

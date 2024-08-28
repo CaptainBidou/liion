@@ -6,3 +6,11 @@
     /* height:80%; */
 
 }
+
+.blur{
+    filter:blur(5px);
+}
+
+.notBlur{
+    filter:blur(0px);
+}

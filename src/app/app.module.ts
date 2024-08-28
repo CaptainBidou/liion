@@ -33,13 +33,15 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {HttpClientModule} from '@angular/common/http';
 import {MatSliderModule} from '@angular/material/slider';
+import { PopUpComponent } from './pop-up/pop-up.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     TestParamComponent,
     filteredCells,
-    TestComponentComponent
+    TestComponentComponent,
+    PopUpComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,9 @@ export class TestParamComponent {
   cellModel:number;
   cellSelected:Cell[]=[];
 
+  r0 :any = {};
+  r0$: Observable<any>;
+
   commentModel ="";
   
   observers : Estimator[] = [];
@@ -84,6 +87,8 @@ allMeasureData:any[] = [];
     this.test$ = RequestService.doRequest({"id": 7, "data": {"nothing": "nothing"}});
     this.futebol$ = RequestService.doFutbolRequestGet({});
     this.lastTest$ = RequestService.doRequest({"id": 6, "data": {"id_test": this.lastTestid}});
+
+    this.r0$ = RequestService.doRequest({"id":9 , "data": {"id_test": this.lastTestid}});
     //this.allMeasure$ = RequestService.doRequest({"id": 4, "data": {"id_test": this.lastTestid,"id_last_measure": 0}});
 
     this.cellModel=-1;
@@ -128,8 +133,16 @@ allMeasureData:any[] = [];
         }
 
       });
-      this.lastTest$ = this.RequestService.doRequest({"id": 6, "data": {"id_test": this.lastTestid}});
-      this.lastTest$.subscribe((data) => {console.log(data);this.lastTestData = data;});
+    });
+
+    this.r0$.subscribe((data) => {
+      console.log(data);
+      data.forEach((element:any) => {
+        this.r0[String(element[0])] = {"avg":0,"max":0,"min":0};
+        this.r0[String(element[0])].avg = element[1]; 
+        this.r0[String(element[0])].max = element[2];
+        this.r0[String(element[0])].min = element[3];
+      });
     });
     
 
@@ -588,6 +601,18 @@ allMeasureData:any[] = [];
     }
 
     fileChange($event:any){
+
+    }
+
+    getr0(id:number,propriety:string){
+      // if r0[id] is not defined
+      if(this.r0[String(id)]==undefined){
+        return 0;
+      }
+      let val = this.r0[String(id)][propriety];
+      // round val
+      val = Math.round(val*1000)/1000;
+      return val;
 
     }
 

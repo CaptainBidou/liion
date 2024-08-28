@@ -1,0 +1,21 @@
+.popUp{
+    position: absolute;
+    /* center of the page */
+    top: 34.5%;
+    left: 34.5%;
+
+    width: 30%;
+    height: 30%;
+
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background blur */
+    /* filter:blur(5px); */
+    
+    
+    border-radius: 10px;
+
+
+}
