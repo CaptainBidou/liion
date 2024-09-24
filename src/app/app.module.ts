@@ -34,6 +34,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {HttpClientModule} from '@angular/common/http';
 import {MatSliderModule} from '@angular/material/slider';
 import { PopUpComponent } from './pop-up/pop-up.component';
+import { GraphComponent } from './graph/graph.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     TestParamComponent,
     filteredCells,
     TestComponentComponent,
-    PopUpComponent
+    PopUpComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     MatCheckboxModule,
     CanvasJSAngularChartsModule,
     HttpClientModule,
-    MatSliderModule
+    MatSliderModule,
+    DragDropModule
 
 
   ],

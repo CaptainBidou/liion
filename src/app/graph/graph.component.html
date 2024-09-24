@@ -1,0 +1,17 @@
+
+<div cdkDrag>
+    <mat-card>
+        
+        <mat-toolbar class="barre" color="primary"><mat-icon>battery_full</mat-icon>{{cell.name}} - {{estimator.name}}</mat-toolbar>
+        <div>
+            <canvasjs-chart  [options]="this.cellGraph.chartOptionsVoltage" [styles]="{width: '100%', height:'150px'}" (chartInstance)="getChartInstanceVoltage($event)"></canvasjs-chart>   
+        </div>
+        <div>
+            <canvasjs-chart  [options]="this.cellGraph.chartOptionsSoc" [styles]="{width: '100%', height:'150px'}" (chartInstance)="getChartInstanceSOC($event)"></canvasjs-chart>    
+        </div>
+        <div>
+            <canvasjs-chart  [options]="this.cellGraph.chartOptionsTemperature" [styles]="{width: '100%', height:'150px'}" (chartInstance)="getChartInstanceTemperature($event)"></canvasjs-chart>    
+        </div>
+    </mat-card>
+</div>
+

@@ -13,11 +13,11 @@
     
                     <mat-label>Action type</mat-label>
                 <mat-select [(value)]="actionModel" >
-                    <mat-option *ngFor="let act of actions" [value]="act.id">{{act.name}}</mat-option>
+                    <mat-option *ngFor="let act of actions" [value]="act">{{act.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
     
-            <div *ngIf="actionModel==3 || actionModel==1 || actionModel==5">
+            <div *ngIf="actionModel.crate_bool==true">
                 <mat-divider></mat-divider>
                 <p>C-rate (%) :</p>
             <mat-slider  min="0" max="200" step="1"  showTickMarks discrete [displayWith]="formatLabel">
@@ -83,7 +83,7 @@
     </div>
     
     <div class="page-milieu">
-        <div class="page-milieu-top">
+        <!-- <div class="page-milieu-top"> -->
             <mat-card class="carte-milieu">
                 <mat-card-header>
                     <mat-card-title>Dataset export </mat-card-title>
@@ -93,15 +93,16 @@
                 <mat-form-field>
                     <mat-label>Test selected</mat-label>
                 <mat-select [(value)]="this.testModel">
-                    <mat-option  *ngFor="let test of tests" [value]="test.id">{{test.name}}</mat-option>
+                    <mat-option  *ngFor="let test of tests" [value]="test.id">{{test.name()}}</mat-option>
                 </mat-select>
                 </mat-form-field>
                 <mat-card-actions>
                     <button mat-button (click)="downloadTest()">Export dataset</button>
+                    <button mat-button color="warn" (click)="deleteTest()">Delete dataset</button>
                 </mat-card-actions>
             </mat-card>
         
-            <mat-card class="carte-milieu">
+            <!-- <mat-card class="carte-milieu">
                 <mat-card-header>
                     <mat-card-title>Create new cell </mat-card-title>
                     <mat-card-subtitle>To create a new cell into the database</mat-card-subtitle>
@@ -115,8 +116,8 @@
                 <mat-card-actions>
                     <button mat-button (click)="createCell()">Create cell</button>
                 </mat-card-actions>
-            </mat-card>
-        </div>
+            </mat-card> -->
+        <!-- </div> -->
        
     
     
@@ -127,12 +128,12 @@
         </mat-card-header>
         <mat-card-content >
             <mat-list>
-                <span *ngFor="let cell of cells" [style.display]="'flex'" class="flexiCell">
-                    <p><b>{{cell.name}} :</b></p>
-                        <mat-progress-bar mode="determinate" [value]="cell.soc*100" [style.margin-top]="'2%'" [style.width]="'50%'" ></mat-progress-bar>
-                        <p><b>R0 Max:{{this.getr0(cell.id,"max")}}</b></p>
-                        <p><b>R0 Avg:{{this.getr0(cell.id,"avg")}}</b></p>
-                        <p><b>R0 Min:{{this.getr0(cell.id,"min")}}</b></p>
+                <span *ngFor="let stat of r0" [style.display]="'flex'" class="flexiCell">
+                    <p><b>{{stat.cell.name}} :</b></p>
+                        <mat-progress-bar mode="determinate" [value]="stat.cell.soc*100" [style.margin-top]="'2%'" [style.width]="'50%'" ></mat-progress-bar>
+                        <p><b>R0 Max:{{math.round(stat.avgr0*100)/100}}</b></p>
+                        <p><b>R0 Avg:{{math.round(stat.maxr0*100)/100}}</b></p>
+                        <p><b>R0 Min:{{math.round(stat.minr0*100)/100}}</b></p>
                 </span>
             </mat-list>
         </mat-card-content>
@@ -148,16 +149,7 @@
                 <mat-card-title>Dataset import </mat-card-title>
                 <mat-card-subtitle>To import dataset into the database</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
-                <p>Separator : </p>
-                <mat-form-field>
-                    <mat-label>Separator</mat-label>
-                    <input matInput [value]="newCellName"(input)="getValueCell($event)">
-                </mat-form-field>
-                <mat-divider></mat-divider>
-                <p>File : </p>
-                <input type="file" (change)="fileChange($event)">
-            </mat-card-content>
+           
             <mat-card-actions>
                 <button mat-button (click)="submitFormulary()">Import dataset</button>
             </mat-card-actions>
@@ -172,13 +164,7 @@
             <img src="assets/image/github-mark.png" alt="github commit picture" class="logo"/>
         </mat-card-header>
         <mat-card-content>
-            <!-- <p>{{githubCommitName}}</p>
-            <p>{{githubCommitDate | date:"dd MMM, yyyy "}}</p>
-            <p>{{githubCommitPseudo}}</p>
-            <img src="{{githubCommitPicture}}" alt="github commit picture" width="100" height="100"> -->
-            <p><b>By:</b><img src="{{githubCommitPicture}}" alt="github commit picture" width="15" height="15"> {{githubCommitPseudo}}</p>
-            <p><b>On:</b> {{githubCommitDate | date:"dd MMM, yyyy "}}</p>
-            <p><b>Commit:</b> {{githubCommitName}}</p>
+          
         </mat-card-content>
     </mat-card>
 
@@ -190,9 +176,7 @@
             <img src="https://media.api-sports.io/football/teams/126.png" alt="github commit picture" class="logo">
         </mat-card-header>
         <mat-card-content>
-            <p><b>Total goal:</b>{{this.futebolObject.response.goals.for.total.total}}</p>
-            <p><b>Total win:</b>{{this.futebolObject.response.fixtures.wins.total}}</p>
-            <p><b>Biggest win streak :</b>{{this.futebolObject.response.biggest.streak.wins}}</p>
+           
         </mat-card-content>
     </mat-card>
     </div>

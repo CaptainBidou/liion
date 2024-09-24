@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SocketAddress } from 'net';
 import { Observable } from 'rxjs';
+import { Test } from './Model/Test.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,23 @@ export class RequestService {
 
   // the server is 127.0.0.1:5000
   // send {id: 1, data: {}} to the server
+
+  public doPostRequest(route:string,data:any): Observable<any> {
+    return this.http.post("http://127.0.0.1:5000/"+route,data);
+  }
+
+
+   public doGetRequest(route:string): Observable<any> {
+    return this.http.get("http://127.0.0.1:5000/"+route);
+  }
+
+  public doDeleteRequest(route:string): Observable<any> {
+    return this.http.delete("http://127.0.0.1:5000/"+route);
+  }
+
+  public doPutRequest(route:string,data:any): Observable<any> {
+    return this.http.put("http://127.0.0.1:5000/"+route,data);
+  }
 
   public doRequest(data: any): Observable<any> {
     return this.http.post('http://127.0.0.1:5000', data);

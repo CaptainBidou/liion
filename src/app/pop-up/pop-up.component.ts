@@ -21,12 +21,12 @@ requestService: RequestService;
 obs$ : Observable<any>;
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) {
     this.requestService = RequestService;
-    this.obs$ = RequestService.doRequest({"id": 0, "data": {"id_test": this.id}});
+    this.obs$ = RequestService.doGetRequest("currentVoltage?"+this.id);
    }
 
   ngOnInit(): void {
     console.log(this.id);
-    this.obs$ = this.requestService.doRequest({"id": 0, "data": {"id_test": this.id}});
+    this.obs$ = this.requestService.doGetRequest("currentVoltage?"+this.id);
     this.obs$.subscribe((data) => {
       console.log(data);
       this.voltage = data.Voltage;

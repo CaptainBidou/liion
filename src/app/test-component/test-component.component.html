@@ -2,59 +2,33 @@
 
 <mat-card [ngClass]="popUp?'blur':'notBlur'" class="carte">
     <mat-card-header>
-        <mat-card-title>
-        <h1>Test {{cellsName}} <span *ngIf="actionSelected.id==3 || actionSelected.id==1 || actionSelected.id==5">With C-Rate {{crate}}%</span></h1>
-        </mat-card-title>
-        <mat-card-subtitle>{{date | date:"dd MMM, yyyy 'at' hh:mm a"}}</mat-card-subtitle>
-        <mat-card-subtitle>Commentary : {{comment}}</mat-card-subtitle>
+        <div class="flexou">
+            <div class="element-flex-nontaille">
+                    <p><b>Commentary :</b> {{this.test.comment}}</p>
+                    <p><b>Action :</b>{{this.test.action.name}}</p>
+                    <span><b>Estimator :</b><mat-checkbox class="example-margin" *ngFor="let est of this.test.observersList" (change)="updateCheck($event.checked,est.name,true)" [checked]="bindingEstimator[est.name]">{{est.name}}</mat-checkbox></span>
+                    
+                    <span><p></p><b>Cells :</b><mat-checkbox class="example-margin" *ngFor="let cell of this.test.cellsList"(change)="updateCheck($event.checked,cell.name,false)" [checked]="bindingCell[cell.name]">{{cell.name}}</mat-checkbox></span>
+            </div>
+            
+            <div class="element-flex-nontaille">
+                <canvasjs-chart [styles]="{width: '1200px', height:'100%'}"  [options]="chartOptionsCurrent"  (chartInstance)="getChartInstanceCurrent($event)"></canvasjs-chart>
+            </div>
+            <div  class="flexou">
+                <!-- <div class="flexou"> -->
+                    <h1 class="droite"color="primary"><mat-icon>temperature</mat-icon>{{this.temperature}}°C</h1>
+                <!-- </div> -->
+            </div>
+            
+        </div>
     </mat-card-header>
-    <mat-card-content>
-
-        <!--<p>
-        Progess of the test :
-        </p>
-        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-        <div class="example-spacer"></div>-->
-            
-        <div>
-            <span>
-            
-            <section class="example-section">
-                Mode choosen :
-                <mat-checkbox class="example-margin" [disabled]="true" *ngFor="let act of actions" [value]="'true'" [checked]="act.id==actionSelected.id?true:false">{{act.name}}</mat-checkbox>
-              </section>
-            </span>
-            <span>
-                <section class="example-section">
-                    Estimator choosen :
-                    <mat-checkbox class="example-margin" [disabled]="true" *ngFor="let est of observers" [value]="'true'" [checked]="this.isEstimatorUsed(est.id)?true:false">{{est.name}}</mat-checkbox>
-                  </section>
-                </span>
-        </div>
-
-        <div>
-            <span>
-                Voltage : {{voltage}} V
-                Current : {{current}} A
-            </span>
-        </div>
-
-
-        <div>
-            <canvasjs-chart [options]="chartOptionsVoltage" [styles]="{width: '48%', height:'200px', float:'left'}" (chartInstance)="getChartInstanceVoltage($event)"></canvasjs-chart>  
-            <canvasjs-chart [options]="chartOptionsCurrent" [styles]="{width: '52%', height:'200px'}" (chartInstance)="getChartInstanceCurrent($event)"></canvasjs-chart>  
-        </div>
-        <div>
-            <canvasjs-chart [options]="chartOptionsSoc" [styles]="{width: '100%', height:'200px'}" (chartInstance)="getChartInstanceSOC($event)"></canvasjs-chart>    
-        </div>
-        <div>
-            <canvasjs-chart [options]="chartOptionsTemperature" [styles]="{width: '100%', height:'200px'}" (chartInstance)="getChartInstanceTemperature($event)"></canvasjs-chart>    
-        </div>
-        
-
-    </mat-card-content >
-    <mat-card-actions>
-        <button *ngIf="this.actionStart" mat-button color="warn" (click)="stopTest()">Stop the test<mat-icon>stop</mat-icon></button>
-        <button *ngIf="!this.actionStart" mat-button (click)="startTest()">Start the test<mat-icon>play_arrow</mat-icon></button>
-    </mat-card-actions>
+    <button *ngIf="this.test.running_bool" mat-flat-button [style]="{'background-color':'darkred'}" (click)="stopTest()">Stop the test<mat-icon>stop</mat-icon></button>
+    <button *ngIf="!this.test.running_bool" [style]="{'background-color':'green'}" mat-flat-button (click)="startTest()">Start the test<mat-icon>play_arrow</mat-icon></button>
 </mat-card>
+<div class="container-flex" cdkDrop>
+    <div class="element-flex" *ngFor="let cellElt of this.cellTab" [ngClass]="bindingCell[cellElt.cell.name]&&bindingEstimator[cellElt.estimator.name]?'display':'nondisplay'" >
+        <app-graph *ngIf="bindingCell[cellElt.cell.name]&&bindingEstimator[cellElt.estimator.name]" [test]="this.test" [cell]="cellElt.cell" [estimator]="cellElt.estimator" ></app-graph>
+    </div>
+</div>
+<!-- [ngClass]="bindingCell[cellElt.cell.name]&&bindingEstimator[cellElt.estimator.name]?'display':'nondisplay'" -->
+<!-- *ngIf="bindingCell[cellElt.cell.name]&&bindingEstimator[cellElt.estimator.name]" -->
