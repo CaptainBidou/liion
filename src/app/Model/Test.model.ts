@@ -14,7 +14,9 @@ export class Test {
     cellsList: Cell[];
     observersList: Estimator[];
     running_bool: boolean;
+    time_resting: number;
     constructor(objet:any) {
+        this.time_resting = 0;
         if(objet==null){
             this.id = 0;
             this.time = new Date();
@@ -42,6 +44,9 @@ export class Test {
         }
         
         this.running_bool = Boolean(Number(objet.running_bool));
+        if(objet.time_resting!=undefined){
+            this.time_resting = objet.time_resting;
+        }
 
     }
     public name():string{

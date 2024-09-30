@@ -36,6 +36,16 @@ import {MatSliderModule} from '@angular/material/slider';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { GraphComponent } from './graph/graph.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HealthTestComponent } from './health-test/health-test.component';
+import { FormsModule } from '@angular/forms';
+import { MatDateFormats } from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { HealthTestComponentComponent } from './health-test-component/health-test-component.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +54,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     filteredCells,
     TestComponentComponent,
     PopUpComponent,
-    GraphComponent
+    GraphComponent,
+    HealthTestComponent,
+    HealthTestComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +86,12 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     CanvasJSAngularChartsModule,
     HttpClientModule,
     MatSliderModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressSpinnerModule,
+    FormsModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule
 
 
   ],

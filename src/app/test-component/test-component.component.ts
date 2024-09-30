@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequestService } from '../request.service';
@@ -12,6 +12,7 @@ import { getLocaleFirstDayOfWeek } from '@angular/common';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { read } from 'fs';
+import { healthTestModel } from '../Model/HealthTestModel';
 
 @Component({
 	selector: 'app-test-component',
@@ -19,11 +20,16 @@ import { read } from 'fs';
 	styleUrl: './test-component.component.css'
 })
 export class TestComponentComponent {
+
 	private route = inject(ActivatedRoute);
 	id: number;
+	idH:number|null;
 	test$: Observable<any>;
 	test: Test;
 	public requestService: RequestService;
+	request$: Observable<any>;
+
+	healthTest:healthTestModel|null=null;
 
 	actions: Action[] = [];
 
@@ -74,8 +80,20 @@ export class TestComponentComponent {
 	constructor(requestService: RequestService, private router: Router) {
 		this.test = new Test(null);
 		this.lastMeasure = new Measure(null)
-		this.id = this.route.snapshot.params['id'];
+		if(this.route.snapshot.params['idHealth']==undefined||this.route.snapshot.params['idTest']==undefined){
+			this.id = this.route.snapshot.params['id'];
+			this.idH =null;
+		}else{
+			this.id =this.route.snapshot.params['idTest'];
+			this.idH=  this.route.snapshot.params['idHealth'];
+
+		}
+		// console.log(this.id)
+		
+
+
 		this.requestService = requestService;
+		this.request$=this.requestService.doGetRequest("");
 		
 		this.test$ = requestService.doGetRequest("test?" + this.id);
 		this.temperature$ =  requestService.doGetRequest("temperature");
@@ -110,7 +128,39 @@ export class TestComponentComponent {
 			this.temperature = objet.ambientTemperature
 		})
 
-	}
+		if(this.idH!=null){
+			this.request$=this.requestService.doGetRequest("health_test?" + this.idH);
+			this.request$.subscribe((data) => {
+				this.healthTest=new healthTestModel(JSON.parse(data));
+				console.log("lasfnalskdjalskdalsk")
+				console.log(this.healthTest)
+				// for(let i=0;i<this.healthTest.testsList.length;i++){
+				// 	if(this.healthTest.testsList[i].id<=this.id&& i!=0){
+				// 				// remove this element from the array
+				// 				this.healthTest?.testsList.splice(i,1);
+				// 			}
+				// 	if(this.healthTest)
+							// if(this.healthTest.testsList[i].id == this.id){
+							// 	// remove this element from the array
+							// 	this.healthTest?.testsList.splice(this.healthTest?.testsList.indexOf(this.healthTest.testsList[i]),1);
+							// }
+
+							// if(this.healthTest.testsList[i].id==this.id&&this.healthTest.testsList.length==1){
+							// 	// remove this element from the array
+							// 	this.healthTest?.testsList.pop()
+							// }
+
+						});
+				}
+			
+
+
+
+
+
+			
+		}
+
 
 	chargeTime(){
 		this.temperature$ =  this.requestService.doGetRequest("temperature");
@@ -196,6 +246,10 @@ export class TestComponentComponent {
 			this.bindingCell[entree]=boo;
 		}
 
+	}
+
+	goToNext(idH:any,idT:any){
+		window.location.href = "/healthTest/"+idH+"/"+idT
 	}
 
 

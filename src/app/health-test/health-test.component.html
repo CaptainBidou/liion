@@ -1,0 +1,106 @@
+
+    <mat-card class="flexObjet">
+        <mat-card-title>
+            Test creation
+        </mat-card-title>
+        <mat-card-content class="container-flex">
+    
+            <div class="objet">
+                <p>Action : </p>
+                  <mat-form-field>
+                      <mat-label [ngStyle]="this.actionModel.name.length==0?{'color': '#C24244'}:{'color': '#3F51B5'}">Action type</mat-label>
+                  <mat-select [(value)]="actionModel" >
+                      <mat-option *ngFor="let act of actions" [value]="act">{{act.name}}</mat-option>
+                  </mat-select>
+                          </mat-form-field>
+                  
+                          <!-- <div *ngIf="actionModel.crate_bool==true"> -->
+                  <mat-divider></mat-divider>
+                  <p>C-rate (%) :</p>
+                          <mat-slider [disabled]="!actionModel.crate_bool" min="0" max="200" step="1"  showTickMarks discrete [displayWith]="formatLabel">
+                  <input matSliderThumb [(value)]="cratePercent">
+                </mat-slider>
+                          <!-- </div> -->
+                  
+                  
+                  
+                          <mat-divider></mat-divider>
+                          <p>Cell : </p>
+                          <mat-form-field >
+                      <mat-label  [ngStyle]="this.cellSelected.length==0?{'color': '#C24244'}:{'color': '#3F51B5'}">Cells selected</mat-label>
+                  <mat-select  [(value)]="cellSelected" multiple>
+                      <mat-option  *ngFor="let cel of cells" [value]="cel">{{cel.name}}</mat-option>
+                  </mat-select>
+                          </mat-form-field>
+                  <mat-divider></mat-divider>
+                  <p>Estimator : </p>
+                  <mat-form-field>
+                      <mat-label [ngStyle]="this.observerSelected.length==0?{'color': '#C24244'}:{'color': '#3F51B5'}">Estimator selected</mat-label>
+                  <mat-select [(value)]="this.observerSelected" multiple>
+                      <mat-option *ngFor="let cel of observers" [value]="cel">{{cel.name}}</mat-option>
+                  </mat-select>
+                  
+                </mat-form-field>
+                  <mat-divider></mat-divider>
+                  <p>Commentary : </p>
+                  <mat-form-field>
+                      <mat-label>Commentary</mat-label>
+                      <input  matInput type="text" maxlength="255" [(ngModel)]="commentModel">
+                      <mat-hint align="end">{{commentModel.length}} / 255</mat-hint>
+                  </mat-form-field>
+
+                  <p>Time resting : </p>
+                  <mat-form-field>
+                    <mat-label>Time Resting</mat-label>
+                    <input matInput type="number" [(ngModel)]="timeResting">
+                    <mat-hint align="end">second(s)</mat-hint>
+                  </mat-form-field>
+                
+                <div>
+                    <span>
+                        <button mat-button (click)="AddToList()">Add the test in the health Test<mat-icon>add</mat-icon></button>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        <button mat-button (click)="pushTest()">Run without the health Test<mat-icon>play_arrow</mat-icon></button>
+                    </span>
+                </div>
+
+
+            </div>
+            <div class="objet-health">
+                <p>Health Test commentary :</p>
+                <mat-form-field>
+                    <mat-label>Commentary</mat-label>
+                    <input matInput type="text" maxlength="255" [(ngModel)]="commentModel2">
+                    <mat-hint align="end">{{commentModel2.length}} / 255</mat-hint>
+                </mat-form-field>
+                <mat-divider></mat-divider>
+                <p>Tests List :</p>
+                <div class="overflow-example">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let test of this.testList" cdkDrag>
+                        <div>
+                            <p><b>Name:</b> {{test.name()}}</p>
+                            <p><b>Time resting:</b> {{test.time_resting}} s</p>
+                        </div>
+                        <div>
+                            <button mat-icon-button color="primary" (click)="copyTest(test)"><mat-icon>file_copy</mat-icon></button>
+                            <button mat-icon-button color="primary" (click)="removeTest(test)"><mat-icon>delete</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div>
+                    <span>
+                        <button mat-button (click)="createHealthTest()">Create and run the health Test<mat-icon>play_arrow</mat-icon></button>
+                    </span>
+                </div>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>

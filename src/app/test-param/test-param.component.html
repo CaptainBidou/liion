@@ -1,76 +1,13 @@
 <div class="grandPage">
+    
     <div class="page">
         <!-- put this one on left  -->
-        <mat-card class="carte">
-            <mat-card-header>
-                <mat-card-title>Test creation </mat-card-title>
-                <mat-card-subtitle>To create the test on the database</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-    
-              <p>Action : </p>
-                <mat-form-field>
-    
-                    <mat-label>Action type</mat-label>
-                <mat-select [(value)]="actionModel" >
-                    <mat-option *ngFor="let act of actions" [value]="act">{{act.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <div *ngIf="actionModel.crate_bool==true">
-                <mat-divider></mat-divider>
-                <p>C-rate (%) :</p>
-            <mat-slider  min="0" max="200" step="1"  showTickMarks discrete [displayWith]="formatLabel">
-                <input matSliderThumb [(value)]="cratePercent">
-              </mat-slider>
-            </div>
-    
-    
-    
-            <mat-divider></mat-divider>
-            <p>Cell : </p>
-            <mat-form-field>
-                    <mat-label>Cells selected</mat-label>
-                <mat-select (selectionChange)="addCellected()" [(value)]="this.cellModel">
-                    <mat-option  *ngFor="let cel of cells" [value]="cel.id">{{cel.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-chip-set aria-label="Fish selection">
-                <mat-chip *ngFor="let cel of cellSelected" (click)="removeCellected(cel.id)">{{cel.name}}</mat-chip>
-            </mat-chip-set>
-    
-                <mat-divider></mat-divider>
-    
-                <p>Estimator : </p>
-                <mat-form-field>
-    
-                    <mat-label>Estimator selected</mat-label>
-                <mat-select (selectionChange)="addObserver()" [(value)]="this.observerModel">
-                    <mat-option *ngFor="let cel of observers" [value]="cel.id">{{cel.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-chip-set aria-label="Fish selection">
-                <mat-chip *ngFor="let cel of observerSelected" (click)="removeObserver(cel.id)">{{cel.name}}</mat-chip>
-            </mat-chip-set>
-    
-                <mat-divider></mat-divider>
-    
-                <p>Commentary : </p>
-                <mat-form-field>
-                    <mat-label>Commentary</mat-label>
-                    <textarea matInput [value]="commentModel"
-                    (input)="getValueComment($event)"></textarea>
-                </mat-form-field>
-    
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="submitFormulary()">Create the test</button>
-            </mat-card-actions>
-        </mat-card>
+        <app-health-test ></app-health-test>
+
         <mat-card class="carte">
             <mat-card-header>
                 <mat-card-title>Discord server</mat-card-title>
-                <mat-card-subtitle>Join the discord server to know when the test are over</mat-card-subtitle>
+                <mat-card-subtitle>Join the discord server to know when the tests are over</mat-card-subtitle>
                 <img src="assets/image/discord-mark-black.png" alt="github commit picture" class="logo-discord"/>
             </mat-card-header>
             <p></p>
@@ -102,21 +39,7 @@
                 </mat-card-actions>
             </mat-card>
         
-            <!-- <mat-card class="carte-milieu">
-                <mat-card-header>
-                    <mat-card-title>Create new cell </mat-card-title>
-                    <mat-card-subtitle>To create a new cell into the database</mat-card-subtitle>
-                </mat-card-header>
-                <p>Cell name : </p>
-                <mat-form-field>
-                    <mat-label>Name</mat-label>
-                    <input matInput [value]="newCellName"
-                    (input)="getValueCell($event)">
-                </mat-form-field>
-                <mat-card-actions>
-                    <button mat-button (click)="createCell()">Create cell</button>
-                </mat-card-actions>
-            </mat-card> -->
+
         <!-- </div> -->
        
     
@@ -127,15 +50,37 @@
             <mat-card-subtitle>Here is the SOC of each cells</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content >
-            <mat-list>
-                <span *ngFor="let stat of r0" [style.display]="'flex'" class="flexiCell">
-                    <p><b>{{stat.cell.name}} :</b></p>
-                        <mat-progress-bar mode="determinate" [value]="stat.cell.soc*100" [style.margin-top]="'2%'" [style.width]="'50%'" ></mat-progress-bar>
-                        <p><b>R0 Max:{{math.round(stat.avgr0*100)/100}}</b></p>
-                        <p><b>R0 Avg:{{math.round(stat.maxr0*100)/100}}</b></p>
-                        <p><b>R0 Min:{{math.round(stat.minr0*100)/100}}</b></p>
-                </span>
-            </mat-list>
+            <div class="tableau">
+                    <span class="ligne head">
+                        <p><b>Name</b></p>
+                        <p><b>SOC</b></p>
+                            <p><b>R0 Max</b></p>
+                            <p><b>R0 Avg</b></p>
+                            <p><b>R0 Min</b></p>
+                    </span>
+                
+                <div class="corps">
+                    <div *ngFor="let stat of r0" class="ligne">
+                        <div>
+                            <p>{{stat.cell.name}}</p>
+                        </div>
+                        <!-- [style.width]="'10%'" -->
+                            <div>
+                                <mat-progress-bar mode="determinate" [value]="stat.cell.soc*100" [style.margin-top]="'15%'"  ></mat-progress-bar>
+                            </div>
+                            <div>
+                                <p>{{math.round(stat.avgr0*100)/100}}</p>
+                            </div>
+                            <div>
+                                <p>{{math.round(stat.maxr0*100)/100}}</p>
+                            </div>
+                            <div>
+                                <p>{{math.round(stat.minr0*100)/100}}</p>
+                            </div>
+                    </div>
+                </div>
+                
+            </div>
         </mat-card-content>
     </mat-card>
     
@@ -146,39 +91,80 @@
     
         <mat-card class="carte">
             <mat-card-header>
-                <mat-card-title>Dataset import </mat-card-title>
-                <mat-card-subtitle>To import dataset into the database</mat-card-subtitle>
+                <mat-card-title>Create new cell </mat-card-title>
+                <mat-card-subtitle>To create a new cell into the database</mat-card-subtitle>
             </mat-card-header>
-           
+            <p>Cell name : </p>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput [value]="newCellName"
+                (input)="getValueCell($event)">
+            </mat-form-field>
+            <p>Cell SOC : </p>
+            <mat-form-field>
+                <mat-label>SOC</mat-label>
+                <input matInput [value]="newCellSoc"
+                (input)="getValueSocCell($event)">
+            </mat-form-field>
             <mat-card-actions>
-                <button mat-button (click)="submitFormulary()">Import dataset</button>
+                <button mat-button (click)="createCell()">Create cell</button>
             </mat-card-actions>
+
+            
         </mat-card>
     
     
     
     <mat-card class="carte">
         <mat-card-header>
-            <mat-card-title>Last github update</mat-card-title>
-            <mat-card-subtitle>See the last github update</mat-card-subtitle>
-            <img src="assets/image/github-mark.png" alt="github commit picture" class="logo"/>
+            <mat-card-title>State of the devices </mat-card-title>
+            <mat-card-subtitle>To see if all the devices of the system are ok</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          
+            <mat-list>
+                <span [style.display]="'flex'"><p><b>Database</b></p><mat-icon color="primary">check_circle</mat-icon></span>
+                <span [style.display]="'flex'"><p><b>Arduino</b></p><mat-icon color="primary">check_circle</mat-icon></span>
+                <span [style.display]="'flex'"><p><b>power supply</b></p><mat-icon color="primary">check_circle</mat-icon></span>
+                <span [style.display]="'flex'"><p><b>Electronic load</b></p><mat-icon color="primary">check_circle</mat-icon></span>
+            </mat-list>
+
+            <!-- <mat-list>
+                <span *ngFor="let device of devices" [style.display]="'flex'" class="flexiCell">
+                    <p><b>{{device.name}} :</b></p>
+                    <mat-icon *ngIf="device.state==true" color="primary">check_circle</mat-icon>
+                    <mat-icon *ngIf="device.state==false" color="warn">error</mat-icon>
+                </span>
+            </mat-list> -->
         </mat-card-content>
+       
     </mat-card>
 
 
     <mat-card class="carte">
         <mat-card-header>
-            <mat-card-title>Last SPFC update</mat-card-title>
-            <mat-card-subtitle>See the last SPFC update</mat-card-subtitle>
-            <img src="https://media.api-sports.io/football/teams/126.png" alt="github commit picture" class="logo">
+            <mat-card-title>Tests running </mat-card-title>
+            <mat-card-subtitle>See all the test that are running</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-           
+            <mat-list>
+                <div *ngFor="let test of tests">
+                    <div *ngIf="test.running_bool==true" [style.display]="'flex'" class="flexiCell" class="testObjet">
+                        <div>
+                            <p><b>Name:</b> {{test.name()}}</p>
+                        </div>
+                        <div>
+                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" color="primary">stop</mat-icon></button>
+                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" color="primary">remove_red_eye</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </mat-list>
         </mat-card-content>
+       
     </mat-card>
+
+
+    
     </div>
     
 </div>

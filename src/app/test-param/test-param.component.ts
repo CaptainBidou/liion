@@ -23,7 +23,6 @@ export class TestParamComponent {
   action$: Observable<any>;
   actionModel:Action;
 
-
   cells : Cell[] = [];
   cell$: Observable<any>;
   cellModel:number;
@@ -40,7 +39,6 @@ export class TestParamComponent {
   observerSelected:Estimator[]=[];
 
   sendRequest$: Observable<any>;
-  data:TestForm;
   
   tests:Test[] = [];
   test$: Observable<any>;
@@ -53,12 +51,12 @@ export class TestParamComponent {
   fileUrl: any;
 
   newCellName: string = "";
+  newCellSoc:number = 0;
   math = Math;
 
 
 
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
-    this.data = new TestForm(-1,[],[],"",-1);
     this.RequestService = RequestService;
 
     this.action$ = RequestService.doGetRequest("action");
@@ -119,6 +117,7 @@ export class TestParamComponent {
   console.log(this.r0)
 });
 
+
   }
 
   public submitFormulary(){
@@ -135,6 +134,9 @@ export class TestParamComponent {
 
   public getValueCell(event:any){
     this.newCellName = event.target.value;
+  }
+  public getValueSocCell(event:any){
+    this.newCellSoc = event.target.value;
   }
 
   public pushTest(){
@@ -239,6 +241,10 @@ export class TestParamComponent {
 
     fileChange($event:any){
 
+    }
+
+    createHealthTest(){
+      window.location.href = "/healthTest";
     }
 
 }

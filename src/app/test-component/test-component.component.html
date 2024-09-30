@@ -19,7 +19,23 @@
                     <h1 class="droite"color="primary"><mat-icon>temperature</mat-icon>{{this.temperature}}°C</h1>
                 <!-- </div> -->
             </div>
-            
+
+            <div *ngIf="this.healthTest!=null" class="droiteV">
+                <p ><b>Next Tests :</b></p>
+                <div class="conteneur">
+                
+                    <div class="example-box" *ngFor="let test of this.healthTest.testsList">
+                        <div>
+                            <p><b>Name:</b> {{test.name()}} + {{test.id}}</p>
+                            <p><b>Time resting:</b> {{test.time_resting}} s</p>
+                        </div>
+                        <div>
+                            <button mat-icon-button color="primary" *ngIf="test.id>this.id" (click)="this.goToNext(this.healthTest.id,test.id)" ><mat-icon>play_arrow</mat-icon></button>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
         </div>
     </mat-card-header>
     <button *ngIf="this.test.running_bool" mat-flat-button [style]="{'background-color':'darkred'}" (click)="stopTest()">Stop the test<mat-icon>stop</mat-icon></button>

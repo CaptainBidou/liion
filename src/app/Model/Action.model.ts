@@ -26,7 +26,7 @@ export class Action {
         this.name = objet.name;
         this.brief=objet.brief;
         this.chargeBool=objet.chargeBool;
-        this.crate_bool=objet.crate_bool;
+        this.crate_bool=Boolean(Number(objet.crate_bool));
         this.function=objet.function;
     }
 }
