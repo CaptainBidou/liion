@@ -58,6 +58,11 @@ export class TestParamComponent {
   database:Boolean = false;
   database$: Observable<any>;
 
+  arduino:Boolean = false;
+  arduino$: Observable<any>;
+
+  device:Boolean = false;
+  device$: Observable<any>;
 
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.RequestService = RequestService;
@@ -69,6 +74,8 @@ export class TestParamComponent {
     this.test$ = RequestService.doGetRequest("test");
     this.r0$ = RequestService.doGetRequest("measure_soh");
     this.database$ = RequestService.doGetRequest("database");
+    this.arduino$ = RequestService.doGetRequest("arduino");
+    this.device$ = RequestService.doGetRequest("device");
 
     this.cellModel=-1;
     this.actionModel=new Action(null);
@@ -88,6 +95,20 @@ export class TestParamComponent {
         this.database = true;
       }
     });
+    this.arduino$.subscribe((data) => {
+      console.log(data);
+      if(data == true){
+        this.arduino = true;
+      }
+    }
+    );
+    this.device$.subscribe((data) => {
+      console.log(data);
+      if(data == true){
+        this.device = true;
+      }
+    }
+    );
 
 
     this.action$.subscribe((data) => {
