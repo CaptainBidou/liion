@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { RequestService } from '../request.service';
@@ -10,6 +10,7 @@ import { Test } from '../Model/Test.model';
 import { TestForm } from '../Model/TestForm';
 import { SohStat } from '../Model/SohStat';
 import { exit } from 'process';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-test-param',
@@ -70,6 +71,11 @@ export class TestParamComponent {
     this.actionModel=new Action(null);
     this.observerModel=-1;
     this.testModel=-1;
+  }
+
+  private _snackBar = inject(MatSnackBar);
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
   ngOnInit() {
 
@@ -223,11 +229,16 @@ export class TestParamComponent {
 
     public createCell(){
       console.log(this.newCellName);
-      this.sendRequest$ = this.RequestService.doRequest({"id": 13, "data": {"name": this.newCellName}});
+      if(this.newCellName == ""){
+        this.openSnackBar("Please enter a name for the cell", "Close");
+        return;
+      }
+      this.sendRequest$ = this.RequestService.doPutRequest("cell",{"name":this.newCellName,"soc":this.newCellSoc});
       this.sendRequest$.subscribe((data) => {
         console.log(data);
         // this.cells.push(new Cell(data, this.newCellName));
         this.newCellName = "";
+        window.location.reload();
       });
     }
     
