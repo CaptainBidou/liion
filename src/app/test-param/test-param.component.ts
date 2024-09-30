@@ -55,6 +55,8 @@ export class TestParamComponent {
   newCellSoc:number = 0;
   math = Math;
 
+  database:Boolean = false;
+  database$: Observable<any>;
 
 
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
@@ -66,6 +68,7 @@ export class TestParamComponent {
     this.sendRequest$ = RequestService.doGetRequest("export?");
     this.test$ = RequestService.doGetRequest("test");
     this.r0$ = RequestService.doGetRequest("measure_soh");
+    this.database$ = RequestService.doGetRequest("database");
 
     this.cellModel=-1;
     this.actionModel=new Action(null);
@@ -78,6 +81,13 @@ export class TestParamComponent {
     this._snackBar.open(message, action);
   }
   ngOnInit() {
+
+    this.database$.subscribe((data) => {
+      console.log(data);
+      if(data == true){
+        this.database = true;
+      }
+    });
 
 
     this.action$.subscribe((data) => {
