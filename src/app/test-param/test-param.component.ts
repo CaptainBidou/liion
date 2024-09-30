@@ -254,6 +254,18 @@ export class TestParamComponent {
 
     }
 
+    stopTest(id:number){
+      this.sendRequest$ = this.RequestService.doPostRequest("stop_test",{"running_bool":false,"id":id});
+      this.sendRequest$.subscribe((data) => {
+        console.log(data);
+        window.location.reload();
+      });
+    }
+
+    goToTest(id:number){
+      window.location.href = "/test/"+id;
+    }
+
     createHealthTest(){
       window.location.href = "/healthTest";
     }

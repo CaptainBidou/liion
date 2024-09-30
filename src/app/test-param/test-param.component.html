@@ -153,8 +153,8 @@
                             <p><b>Name:</b> {{test.name()}}</p>
                         </div>
                         <div>
-                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" color="primary">stop</mat-icon></button>
-                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" color="primary">remove_red_eye</mat-icon></button>
+                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" (click)="stopTest(test.id)" color="primary">stop</mat-icon></button>
+                            <button mat-icon-button> <mat-icon *ngIf="test.running_bool==true" (click)="goToTest(test.id)" color="primary">remove_red_eye</mat-icon></button>
                         </div>
                     </div>
                 </div>
