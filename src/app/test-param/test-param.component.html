@@ -1,23 +1,9 @@
 <div class="grandPage">
     
-    <div class="page">
+    <!-- <div class="page"> -->
         <!-- put this one on left  -->
         <app-health-test ></app-health-test>
-
-        <mat-card class="carte">
-            <mat-card-header>
-                <mat-card-title>Discord server</mat-card-title>
-                <mat-card-subtitle>Join the discord server to know when the tests are over</mat-card-subtitle>
-                <img src="assets/image/discord-mark-black.png" alt="github commit picture" class="logo-discord"/>
-            </mat-card-header>
-            <p></p>
-            <p></p>
-            <p></p>
-            <mat-card-content>
-                <a href="https://discord.gg/th7faSBj" target="_blank">Join the server</a>
-            </mat-card-content>
-        </mat-card>
-    </div>
+    <!-- </div> -->
     
     <div class="page-milieu">
         <!-- <div class="page-milieu-top"> -->
@@ -125,6 +111,7 @@
                 <span [style.display]="'flex'"><p><b>Database</b></p><mat-icon *ngIf="this.database==true" color="primary">check_circle</mat-icon><mat-icon *ngIf="this.database==false" color="warn">close</mat-icon></span>
                 <span [style.display]="'flex'"><p><b>Arduino</b></p><mat-icon *ngIf="this.arduino==true" color="primary">check_circle</mat-icon><mat-icon *ngIf="this.arduino==false" color="warn">close</mat-icon></span>
                 <span [style.display]="'flex'"><p><b>Devices</b></p><mat-icon *ngIf="this.device==true" color="primary">check_circle</mat-icon><mat-icon *ngIf="this.device==false" color="warn">close</mat-icon></span>
+                <span [style.display]="'flex'"><p><b>BMS</b></p><mat-icon *ngIf="this.bms==true" color="primary">check_circle</mat-icon><mat-icon *ngIf="this.bms==false" color="warn">close</mat-icon></span>
             </mat-list>
 
             <!-- <mat-list>
@@ -160,6 +147,20 @@
             </mat-list>
         </mat-card-content>
        
+    </mat-card>
+
+    <mat-card class="carte">
+        <mat-card-header>
+            <mat-card-title>Discord server</mat-card-title>
+            <mat-card-subtitle>Join the discord server to know when the tests are over</mat-card-subtitle>
+            <img src="assets/image/discord-mark-black.png" alt="github commit picture" class="logo-discord"/>
+        </mat-card-header>
+        <p></p>
+        <p></p>
+        <p></p>
+        <mat-card-content>
+            <a href="https://discord.gg/s6SHqSEmQk" target="_blank">Join the server</a>
+        </mat-card-content>
     </mat-card>
 
 

@@ -13,6 +13,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 20px;
+    height: 100%;
 }
 
 .objet{
@@ -38,6 +39,27 @@ example-list {
     overflow: hidden;
   }
   
+
+  .example-box-cell{
+
+
+    padding: 5px;
+    border-bottom: solid 1px #ccc;
+    /* color: rgba(0, 0, 0, 0.87); */
+    color:#3F51B5;
+    display: flex;
+    flex-direction: row;
+    margin:5px;
+    align-items: start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    border-radius: 2%;
+    background: #f5f5f5;
+    font-size: 14px;
+  }
+
+
   .example-box {
     padding: 5px;
     border-bottom: solid 1px #ccc;
@@ -71,11 +93,11 @@ example-list {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
-  .example-box:last-child {
+  .example-box:last-child .example-box-cell:last-child{
     border: none;
   }
   
-  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) .example-box-cell:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
 

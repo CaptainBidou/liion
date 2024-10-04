@@ -31,7 +31,21 @@
                   <mat-select  [(value)]="cellSelected" multiple>
                       <mat-option  *ngFor="let cel of cells" [value]="cel">{{cel.name}}</mat-option>
                   </mat-select>
-                          </mat-form-field>
+                </mat-form-field>
+            <div class="overflow-example">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="dropcell($event)">
+                    <div class="example-box-cell" *ngFor="let cell of this.cellSelected" cdkDrag>
+                        <div>
+                            <p><b>Index:</b> {{this.cellSelected.indexOf(cell)+1}}</p>
+                            <p><b>Name:</b> {{cell.name}}</p>
+                        </div>
+                        <div>
+                            <button mat-icon-button color="primary" (click)="removeCell(cell)"><mat-icon>delete</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                   <mat-divider></mat-divider>
                   <p>Estimator : </p>
                   <mat-form-field>

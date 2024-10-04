@@ -6,6 +6,7 @@ export class Action {
     name: string;
     brief:string;
     chargeBool:boolean;
+    dischargeBool:boolean;
     crate_bool:boolean;
     function:string;
     constructor(objet:any) {
@@ -15,6 +16,7 @@ export class Action {
             this.name = "";
             this.brief="";
             this.chargeBool=false;
+            this.dischargeBool=false;
             this.crate_bool=false;
             this.function="";
             return;
@@ -26,6 +28,7 @@ export class Action {
         this.name = objet.name;
         this.brief=objet.brief;
         this.chargeBool=objet.chargeBool;
+        this.dischargeBool=objet.dischargeBool;
         this.crate_bool=Boolean(Number(objet.crate_bool));
         this.function=objet.function;
     }

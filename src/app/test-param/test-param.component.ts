@@ -64,6 +64,9 @@ export class TestParamComponent {
   device:Boolean = false;
   device$: Observable<any>;
 
+  bms:Boolean=false;
+  bms$:Observable<any>;
+
   constructor(RequestService: RequestService,private sanitizer: DomSanitizer) { 
     this.RequestService = RequestService;
 
@@ -76,6 +79,7 @@ export class TestParamComponent {
     this.database$ = RequestService.doGetRequest("database");
     this.arduino$ = RequestService.doGetRequest("arduino");
     this.device$ = RequestService.doGetRequest("device");
+    this.bms$=RequestService.doGetRequest("bms")
 
     this.cellModel=-1;
     this.actionModel=new Action(null);
@@ -109,6 +113,13 @@ export class TestParamComponent {
       }
     }
     );
+    this.bms$.subscribe((data)=>
+    {
+      console.log(data)
+      if(data==true){
+        this.bms=true
+      }
+    })
 
 
     this.action$.subscribe((data) => {
@@ -196,7 +207,7 @@ export class TestParamComponent {
     this.sendRequest$.subscribe((data) => {
       console.log(data);
       if(data!=0)
-        window.location.href = "/test/"+data;
+        window.location.href =window.location.href+ "/test/"+data;
       // go to the /test page
     });
     
@@ -294,11 +305,11 @@ export class TestParamComponent {
     }
 
     goToTest(id:number){
-      window.location.href = "/test/"+id;
+      window.location.href = window.location.href+"/test/"+id;
     }
 
     createHealthTest(){
-      window.location.href = "/healthTest";
+      window.location.href = window.location.href+"/healthTest";
     }
 
 }

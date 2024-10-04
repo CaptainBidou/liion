@@ -153,10 +153,16 @@ verifInput(){
     this.openSnackBar("Please select at least one cell","Ok");
     return false;
   }
+  if(this.cellSelected.length!=1 && this.cellSelected.length!=8){
+    this.openSnackBar("Please select 1 or 8 cells","Ok");
+    return false;
+
+  }
   if(this.observerSelected.length==0){
     this.openSnackBar("Please select at least one estimator","Ok");
     return false;
   }
+
 
 
   return true;
@@ -167,9 +173,17 @@ drop(event: CdkDragDrop<string[]>) {
   moveItemInArray(this.testList, event.previousIndex, event.currentIndex);
 }
 
+dropcell(event: CdkDragDrop<string[]>) {
+  moveItemInArray(this.cellSelected, event.previousIndex, event.currentIndex);
+}
+
 removeTest(test:TestForm){
   this.testList.splice(this.testList.indexOf(test),1);
 }
+removeCell(cell:Cell){
+  this.cellSelected.splice(this.cellSelected.indexOf(cell),1);
+}
+
 
 copyTest(test:TestForm){
   this.testList.push(test)
@@ -194,7 +208,8 @@ createHealthTest(){
       this.sendRequest$.subscribe((data) => {
         console.log(data);
         let healthTestEx = JSON.parse(data)
-        window.location.href = "/healthTest/"+healthTestEx.id+"/"+healthTestEx.testsList[0].id;
+        // window.location.href = "/healthTest/"+healthTestEx.id+"/"+healthTestEx.testsList[0].id;
+        window.location.href=window.location.href+"/healthTest/"+healthTestEx.id+"/"+healthTestEx.testsList[0].id;
       });
 
 
