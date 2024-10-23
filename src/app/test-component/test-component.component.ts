@@ -63,8 +63,8 @@ export class TestComponentComponent {
 		},
 		axisY: {
 			title: "Ampere",
-			minimum: 0,
-			maximum: 5.5,
+			minimum: -4,
+			maximum: 6.5,
 		},
 		data: [{
 			showInLegend: true,
@@ -121,6 +121,7 @@ export class TestComponentComponent {
 			this.test.observersList.forEach(obs => {
 				this.bindingEstimator[obs.name]=true
 			});
+			// setTimeout(()=>{this.testEnd()},3000)
 		});
 
 		this.temperature$.subscribe((data)=>{
@@ -161,6 +162,20 @@ export class TestComponentComponent {
 			
 		}
 
+		testEnd(){
+			this.test$.subscribe((data) => {
+				console.log(data);
+				let testVar = new Test(data[0])
+				if(testVar.running_bool){
+					setTimeout(()=>{this.testEnd()},3000)
+				}
+				else{
+					this.test.running_bool=false
+				}
+			});
+
+		}
+
 
 	chargeTime(){
 		this.temperature$ =  this.requestService.doGetRequest("temperature");
@@ -185,6 +200,7 @@ export class TestComponentComponent {
 
 	//start of the programm
 	getAllPoints() {
+		console.log("update courant")
 		this.measure$ = this.requestService.doGetRequest("measure_observer?" + this.id + "&" + this.lastMeasure.id+"&"+this.test.observersList[0].id+"&"+this.test.cellsList[0].id);
 		this.measure$.subscribe((data) => {
 			console.log(data);
@@ -204,8 +220,24 @@ export class TestComponentComponent {
 				this.chartC.render()
 			}
 		});
+		this.test$ = this.requestService.doGetRequest("test?" + this.id +"&" + this.lastMeasure.id);
+		this.test$.subscribe((data) => {
+			console.log(data);
+			let testVar = new Test(data[0])
+			console.log(testVar)
+			if(!testVar.running_bool){
+				this.test.running_bool=false
+			}});
 		this.chartC.render()
-		setTimeout(()=>{this.getAllPoints()},2000)
+		if(this.test.running_bool){
+			setTimeout(()=>{this.getAllPoints()},2000)
+		}else{
+			if(this.healthTest!=null)
+			{
+				// setTimeout(()=>{window.location=},)
+			}
+		}
+		
 	}
 
 
@@ -224,7 +256,8 @@ export class TestComponentComponent {
 		this.startStop$ = this.requestService.doPostRequest("start_test", { "id": this.test.id});
 		this.startStop$.subscribe((data) => {
 			console.log(data);
-			this.getAllPoints();
+			setTimeout(()=>{this.getAllPoints()},3000)
+			this.testEnd();
 			this.test.running_bool = true ;
 		});
 	}

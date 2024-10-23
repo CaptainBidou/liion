@@ -113,13 +113,13 @@ export class TestParamComponent {
       }
     }
     );
-    this.bms$.subscribe((data)=>
-    {
-      console.log(data)
-      if(data==true){
-        this.bms=true
-      }
-    })
+    // this.bms$.subscribe((data)=>
+    // {
+    //   console.log(data)
+    //   if(data==true){
+    //     this.bms=true
+    //   }
+    // })
 
 
     this.action$.subscribe((data) => {

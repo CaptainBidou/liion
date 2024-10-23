@@ -49,13 +49,13 @@ export class GraphComponent {
   getAllPoints() {
 	this.measure$ = this.requestService.doGetRequest("measure_observer?"+this.test.id+"&"+this.lastMeasure.id+"&"+this.estimator.id+"&"+this.cell.id);
 		this.measure$.subscribe((data) => {
-			console.log(data);
+			// console.log(data);
 			if (data != null) {
 
 				data.forEach(element => {
-					console.log(element)
+					// console.log(element)
 					this.lastMeasure = new Measure(element)
-					console.log(this.lastMeasure)
+					// console.log(this.lastMeasure)
 					// update soc
 
 
